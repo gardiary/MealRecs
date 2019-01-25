@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <title>MealRecs :: Recipe</title>
+    <!--/*/ <th:block th:include="fragments/general :: head"></th:block> /*/-->
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" th:fragment="recsnav">
+    <a class="navbar-brand" href="/"><strong class="text-light">MealRecs</strong></a>
+</nav>
+
+<main role="main" class="container">
+    ID : <span th:text="${recipe.id}"></span><br/>
+    Name : <span th:text="${recipe.name}"></span><br/>
+    Picture : <span th:text="${recipe.picture}"></span><br/>
+    Ingredients :<br/>
+    <ul>
+        <li th:each="ingredient : ${recipe.ingredients}"><input type="hidden" th:value="${ingredient.id}" /><th:block th:text="${ingredient.name} + ' (' + ${ingredient.amount} + ')'" /></li>
+    </ul>
+
+</main>
+
+<th:block th:include="fragments/general :: jsscript"></th:block>
+</body>
+</html>

@@ -1,12 +1,12 @@
 body {
     /*min-height: 75rem;*/
-    padding-top: 4.5rem;
+    padding-top: 5rem;
 }
 
-#wrapper {
-	/*width: 90%;
-	margin: auto;*/
-}
+/*#wrapper {
+	width: 90%;
+	margin: auto;
+}*/
 
 a {
     font-size: 16pt;
