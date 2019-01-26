@@ -23,10 +23,10 @@
     <div>
         <div class="row" style="margin-bottom: 10px" th:each="oneRowRecipes : ${recipes}">
             <div class="col-md-4" th:each="recipe : ${oneRowRecipes}">
-                <a th:href="@{recipe/{id}(id=${recipe.id})}">
+                <a th:href="@{/recipe/{id}(id=${recipe.id})}">
                     <div class="recipe-prev-box border">
-                        <div class="recipe-img-box"><img th:src="@{images/{pic}(pic=${recipe.picture})}"></div>
-                        <div class="recipe-prev-text"><a th:href="@{recipe/{id}(id=${recipe.id})}" th:text="${recipe.name}"></a></div>
+                        <div class="recipe-img-box"><img th:src="@{/images/{pic}(pic=${recipe.picture})}" /></div>
+                        <div class="recipe-prev-text"><a th:href="@{/recipe/{id}(id=${recipe.id})}" th:text="${recipe.name}"></a></div>
                     </div>
                 </a>
             </div>

@@ -11,14 +11,69 @@
 </nav>
 
 <main role="main" class="container">
-    ID : <span th:text="${recipe.id}"></span><br/>
-    Name : <span th:text="${recipe.name}"></span><br/>
-    Picture : <span th:text="${recipe.picture}"></span><br/>
-    Ingredients :<br/>
-    <ul>
-        <li th:each="ingredient : ${recipe.ingredients}"><input type="hidden" th:value="${ingredient.id}" /><th:block th:text="${ingredient.name} + ' (' + ${ingredient.amount} + ')'" /></li>
-    </ul>
-
+    <div class="recipe-view-container rounded">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="row">
+                    <div class="col-md-5"><h3 th:text="${recipe.name}"></h3></div>
+                    <div class="col-md-7">
+                        <div class="recipe-img-box border" style="padding: 4px">
+                            <img th:src="@{/images/{pic}(pic=${recipe.picture})}" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4><label for="ingredients">Ingredients:</label></h4>
+                        <div id="ingredients">
+                            <div class="checkbox" th:each="ingredient : ${recipe.ingredients}">
+                                <input name="ingredient" type="checkbox" th:id="'ingredient'+${ingredient.id}" th:value="${ingredient.id}" th:checked="${ingredient.selected}" />
+                                <label th:for="'ingredient'+${ingredient.id}" th:text="${ingredient.name}"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 20px">
+                    <div class="col-md-6">
+                        <div style="padding: 10px; background-color: #FF5733 ">
+                            <span class="text-light">Directions to appear here</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 30px">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>Meal Recommendations</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4" th:each="recRecipe : ${recommendationRecipes}">
+                                <a th:href="@{/recipe/{id}(id=${recRecipe.id})}">
+                                    <div class="recipe-rec-box border">
+                                        <div class="recipe-rec-img-box"><img th:src="@{/images/{pic}(pic=${recRecipe.picture})}" /></div>
+                                        <div class="recipe-rec-text"><a th:href="@{/recipe/{id}(id=${recRecipe.id})}" th:text="${recRecipe.name}"></a></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-dark">Add to my recipe list</button>
+                    </div>
+                    <div class="col-md-6">
+                        <div style="padding: 6px; background-color: #900C3F;">
+                            <span class="text-light">My Recipe list</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 
 <th:block th:include="fragments/general :: jsscript"></th:block>

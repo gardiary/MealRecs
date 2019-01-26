@@ -1,6 +1,11 @@
 body {
     /*min-height: 75rem;*/
     padding-top: 5rem;
+    padding-bottom: 2rem;
+    background-color: #FAFAFA;
+    /*font-family: Helvetica, Arial, sans-serif;*/
+    /*font-family: Times, "Times New Roman", serif;*/
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 /*#wrapper {
@@ -38,4 +43,29 @@ a:hover {
 .recipe-img-box img {
     width: 100%;
     height: 100%;
+}
+
+.recipe-rec-box {
+    /*height: 250px;*/
+    padding: 2px;
+}
+
+.recipe-rec-img-box {
+    height: 92px;
+}
+
+.recipe-rec-img-box img {
+    width: 100%;
+    height: 100%;
+}
+.recipe-rec-text {
+    padding: 4px 4px 2px 4px;
+}
+.recipe-rec-text a {
+    font-size: 14px;
+}
+
+.recipe-view-container {
+    background-color: #F0F0F0;
+    padding: 40px 28px 40px 28px;
 }

@@ -7,6 +7,7 @@ public class Ingredient {
   private Long id;
   private String name;
   private String amount;
+  private boolean selected = true;
 
   public Ingredient() {
   }
@@ -39,5 +40,13 @@ public class Ingredient {
 
   public void setAmount(String amount) {
     this.amount = amount;
+  }
+
+  public boolean isSelected() {
+    return selected;
+  }
+
+  public void setSelected(boolean selected) {
+    this.selected = selected;
   }
 }

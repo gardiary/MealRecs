@@ -24,6 +24,7 @@ public class HomeController {
     @RequestMapping(path = "/recipe/{id}", method = RequestMethod.GET)
     public String recipe(@PathVariable("id") Long id, Model model){
         model.addAttribute("recipe", RecipeRepo.getRecipe(id));
+        model.addAttribute("recommendationRecipes", RecipeRepo.getRecommendationRecipes(id));
         return "recipe";
     }
 
