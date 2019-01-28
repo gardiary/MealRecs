@@ -11,6 +11,7 @@ public class Recipe {
   private String name;
   private String picture;
   private List<Ingredient> ingredients;
+  private List<String> directions;
 
   public Recipe() {
   }
@@ -53,11 +54,38 @@ public class Recipe {
     this.ingredients = ingredients;
   }
 
+  public List<String> getDirections() {
+    return directions;
+  }
+
+  public void setDirections(List<String> directions) {
+    this.directions = directions;
+  }
+
   public void addIngredient(Ingredient ingredient) {
     if(ingredients == null) {
       ingredients = new ArrayList<>();
     }
 
     ingredients.add(ingredient);
+  }
+
+  public void addDirection(String direction) {
+    if(directions == null) {
+      directions = new ArrayList<>();
+    }
+
+    directions.add(direction);
+  }
+
+  @Override
+  public String toString() {
+    return "Recipe[" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", picture='" + picture + '\'' +
+            ", ingredients=" + ingredients +
+            ", directions=" + directions +
+            ']';
   }
 }

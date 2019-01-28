@@ -4,41 +4,31 @@ package com.meal.recs.model;
  * Created by gardiary on 25/01/19.
  */
 public class Ingredient {
-  private Long id;
-  private String name;
-  private String amount;
+  private IngredientItem item;
+  private Double amount;
   private boolean selected = true;
 
   public Ingredient() {
   }
 
-  public Ingredient(Long id, String name, String amount) {
-    this.id = id;
-    this.name = name;
+  public Ingredient(IngredientItem item, Double amount) {
+    this.item = item;
     this.amount = amount;
   }
 
-  public Long getId() {
-    return id;
+  public IngredientItem getItem() {
+    return item;
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  public void setItem(IngredientItem item) {
+    this.item = item;
   }
 
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public String getAmount() {
+  public Double getAmount() {
     return amount;
   }
 
-  public void setAmount(String amount) {
+  public void setAmount(Double amount) {
     this.amount = amount;
   }
 
@@ -48,5 +38,14 @@ public class Ingredient {
 
   public void setSelected(boolean selected) {
     this.selected = selected;
+  }
+
+  @Override
+  public String toString() {
+    return "Ingredient[" +
+            "item=" + item +
+            ", amount=" + amount +
+            ", selected=" + selected +
+            ']';
   }
 }
