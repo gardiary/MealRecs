@@ -1,7 +1,9 @@
 package com.meal.recs.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by gardiary on 25/01/19.
@@ -10,7 +12,8 @@ public class Recipe {
   private Long id;
   private String name;
   private String picture;
-  private List<Ingredient> ingredients;
+  //private List<Ingredient> ingredients;
+  private Map<Long, Ingredient> ingredients = new HashMap<>();
   private List<String> directions;
 
   public Recipe() {
@@ -46,11 +49,19 @@ public class Recipe {
     this.picture = picture;
   }
 
-  public List<Ingredient> getIngredients() {
+  /*public List<Ingredient> getIngredients() {
     return ingredients;
   }
 
   public void setIngredients(List<Ingredient> ingredients) {
+    this.ingredients = ingredients;
+  }*/
+
+  public Map<Long, Ingredient> getIngredients() {
+    return ingredients;
+  }
+
+  public void setIngredients(Map<Long, Ingredient> ingredients) {
     this.ingredients = ingredients;
   }
 
@@ -64,10 +75,10 @@ public class Recipe {
 
   public void addIngredient(Ingredient ingredient) {
     if(ingredients == null) {
-      ingredients = new ArrayList<>();
+      ingredients = new HashMap<>();
     }
 
-    ingredients.add(ingredient);
+    ingredients.put(ingredient.getItem().getId(), ingredient);
   }
 
   public void addDirection(String direction) {

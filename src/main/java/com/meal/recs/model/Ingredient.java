@@ -1,5 +1,7 @@
 package com.meal.recs.model;
 
+import java.math.BigDecimal;
+
 /**
  * Created by gardiary on 25/01/19.
  */
@@ -30,6 +32,12 @@ public class Ingredient {
 
   public void setAmount(Double amount) {
     this.amount = amount;
+  }
+
+  public String getAmountAsString () {
+    BigDecimal am = BigDecimal.valueOf(amount);
+
+    return am.stripTrailingZeros().toPlainString();
   }
 
   public boolean isSelected() {

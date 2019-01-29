@@ -43,7 +43,6 @@ public class HomeController {
         model.addAttribute("recommendationRecipes", RecipeRepo.getRecommendationRecipes(id));
         model.addAttribute("recipeList", recipeList);
 
-
         return "recipe";
     }
 
@@ -55,7 +54,15 @@ public class HomeController {
         if(selectedIngredients != null && selectedIngredients.size() > 0) {
             manageIngredients(recipe, selectedIngredients);
 
+            int size1 = recipeList.getRecipeMap().size();
             recipeList.addRecipe(recipe);
+            int size2 = recipeList.getRecipeMap().size();
+
+            if(size1 == size2) {
+                model.addAttribute("message", "Recipe successfully updated");
+            } else {
+                model.addAttribute("message", "Recipe successfully added");
+            }
         }
 
         model.addAttribute("recipe", RecipeRepo.getRecipe(id));
@@ -65,8 +72,16 @@ public class HomeController {
         return "recipe";
     }
 
+    @RequestMapping(path = "/recipe/list", method = RequestMethod.GET)
+    public String recipeList(Model model, @ModelAttribute("recipeList") RecipeList recipeList) {
+        model.addAttribute("recipeList", recipeList);
+
+        return "recipeList";
+    }
+
     private void manageIngredients(Recipe recipe, List<Long> selectedIngredients) {
-        for(Ingredient ingredient : recipe.getIngredients()) {
+        for(Long key : recipe.getIngredients().keySet()) {
+            Ingredient ingredient = recipe.getIngredients().get(key);
             boolean selected = false;
 
             for(Long selectedIngredient : selectedIngredients) {

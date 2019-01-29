@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en" th:fragment="head">
+    <title>MealRecs :: Recipe List</title>
+    <!--/*/ <th:block th:include="fragments/general :: head"></th:block> /*/-->
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" th:fragment="homenav">
+    <a class="navbar-brand" href="/"><strong class="text-light">MealRecs</strong></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapsed" aria-controls="navbarCollapsed" aria-expanded="false">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-md-center" id="navbarCollapsed">
+        <span class="navbar-text text-light">
+          <strong>My Recipe List</strong>
+        </span>
+    </div>
+</nav>
+
+<main role="main" class="container">
+    <div class="recipe-view-container rounded">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-12" style="padding-left: 4px;"><h4 style="color: #404040;">Recipes Included</h4></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="row recipe-list-box" th:each="recipeKeyValue : ${recipeList.recipeMap}">
+                            <div class="col-md-4" style="padding-left: 4px; padding-right: 4px;">
+                                <a th:href="@{/recipe/{id}(id=${recipeKeyValue.value.id})}">
+                                <div class="border recipe-list-img-box">
+                                    <img th:src="@{/images/{pic}(pic=${recipeKeyValue.value.picture})}" />
+                                </div>
+                                </a>
+                            </div>
+                            <div class="col-md-8" style="padding-left: 4px; padding-right: 4px; margin: auto;">
+                                <a th:href="@{/recipe/{id}(id=${recipeKeyValue.value.id})}" th:text="${recipeKeyValue.value.name}" style="font-size: 14pt"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-12"><h4>Total Ingredients Needed</h4></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">MORE ITEM HERE</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<th:block th:include="fragments/general :: jsscript"></th:block>
+
+</body>
+</html>

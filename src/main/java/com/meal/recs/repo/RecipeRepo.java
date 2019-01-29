@@ -25,25 +25,25 @@ public class RecipeRepo {
     recommendationRecipes = new HashMap<>();
 
     ingredientItemMap = new HashMap<>();
-    ingredientItemMap.put(1L, new IngredientItem(1L, "Pasta", "pcs"));
-    ingredientItemMap.put(2L, new IngredientItem(2L, "Mozzerella", "pcs"));
-    ingredientItemMap.put(3L, new IngredientItem(3L, "Ground Beef", "pcs"));
-    ingredientItemMap.put(4L, new IngredientItem(4L, "Red Sauce", "pcs"));
-    ingredientItemMap.put(5L, new IngredientItem(5L, "Olive Oil", "pcs"));
-    ingredientItemMap.put(6L, new IngredientItem(6L, "Bread Crumbs", "pcs"));
-    ingredientItemMap.put(7L, new IngredientItem(7L, "Tomatoes", "pcs"));
-    ingredientItemMap.put(8L, new IngredientItem(8L, "Lettuce", "pcs"));
-    ingredientItemMap.put(9L, new IngredientItem(9L, "Mushrooms", "pcs"));
-    ingredientItemMap.put(10L, new IngredientItem(10L, "Tortillas", "pcs"));
+    ingredientItemMap.put(1L, new IngredientItem(1L, "Pasta", "box"));
+    ingredientItemMap.put(2L, new IngredientItem(2L, "Mozzerella", "cups"));
+    ingredientItemMap.put(3L, new IngredientItem(3L, "Ground Beef", "lbs"));
+    ingredientItemMap.put(4L, new IngredientItem(4L, "Red Sauce", "oz"));
+    ingredientItemMap.put(5L, new IngredientItem(5L, "Olive Oil", "tbsp"));
+    ingredientItemMap.put(6L, new IngredientItem(6L, "Bread Crumbs", "cup"));
+    ingredientItemMap.put(7L, new IngredientItem(7L, "Tomatoes", ""));
+    ingredientItemMap.put(8L, new IngredientItem(8L, "Lettuce", "cups"));
+    ingredientItemMap.put(9L, new IngredientItem(9L, "Mushrooms", "oz sliced"));
+    ingredientItemMap.put(10L, new IngredientItem(10L, "Tortillas", ""));
     ingredientItemMap.put(11L, new IngredientItem(11L, "Chicken", "pcs"));
-    ingredientItemMap.put(12L, new IngredientItem(12L, "Chicken Broth", "pcs"));
+    ingredientItemMap.put(12L, new IngredientItem(12L, "Chicken Broth", "cups"));
 
     Recipe recipe = new Recipe(1L, "Baked Ziti", "recipe-1.png");
     recipe.addIngredient(new Ingredient(ingredientItemMap.get(1L), 1D));
-    recipe.addIngredient(new Ingredient(ingredientItemMap.get(2L), 0.75));
+    recipe.addIngredient(new Ingredient(ingredientItemMap.get(2L), 1.5));
     recipe.addIngredient(new Ingredient(ingredientItemMap.get(3L), 1.25));
-    recipe.addIngredient(new Ingredient(ingredientItemMap.get(4L), 1.5));
-    recipe.addIngredient(new Ingredient(ingredientItemMap.get(5L), 0.1));
+    recipe.addIngredient(new Ingredient(ingredientItemMap.get(4L), 20D));
+    recipe.addIngredient(new Ingredient(ingredientItemMap.get(5L), 2D));
     recipe.addDirection("Boil water and cook pasta for 10 minutes");
     recipe.addDirection("Cook meat until brown");
     recipe.addDirection("Preheat oven to 350 degrees");
@@ -54,9 +54,9 @@ public class RecipeRepo {
 
     recipe = new Recipe(2L, "Meatballs", "recipe-2.png");
     recipe.addIngredient(new Ingredient(ingredientItemMap.get(3L), 0.75));
-    recipe.addIngredient(new Ingredient(ingredientItemMap.get(2L), 0.25));
-    recipe.addIngredient(new Ingredient(ingredientItemMap.get(4L), 0.5));
-    recipe.addIngredient(new Ingredient(ingredientItemMap.get(6L), 0.33));
+    recipe.addIngredient(new Ingredient(ingredientItemMap.get(2L), 0.5));
+    recipe.addIngredient(new Ingredient(ingredientItemMap.get(4L), 7D));
+    recipe.addIngredient(new Ingredient(ingredientItemMap.get(6L), 1D));
     recipe.addDirection("Mix cheese and bread crumbs in raw meat");
     recipe.addDirection("Place handful size balls of meat on a baking sheet");
     recipe.addDirection("Preheat oven to 350 degrees");
@@ -67,11 +67,11 @@ public class RecipeRepo {
 
     recipe = new Recipe(3L, "Tacos", "recipe-3.png");
     recipe.addIngredient(new Ingredient(ingredientItemMap.get(3L), 1.25));
-    recipe.addIngredient(new Ingredient(ingredientItemMap.get(2L), 0.75));
+    recipe.addIngredient(new Ingredient(ingredientItemMap.get(2L), 1.5));
     recipe.addIngredient(new Ingredient(ingredientItemMap.get(7L), 2D));
-    recipe.addIngredient(new Ingredient(ingredientItemMap.get(8L), 0.33));
-    recipe.addIngredient(new Ingredient(ingredientItemMap.get(9L), 0.33));
-    recipe.addIngredient(new Ingredient(ingredientItemMap.get(10L), 0.1));
+    recipe.addIngredient(new Ingredient(ingredientItemMap.get(8L), 2D));
+    recipe.addIngredient(new Ingredient(ingredientItemMap.get(9L), 4D));
+    recipe.addIngredient(new Ingredient(ingredientItemMap.get(10L), 8D));
     recipe.addDirection("Brown meat over medium heat");
     recipe.addDirection("Season beef to tasting");
     recipe.addDirection("Heat tortillas for 11 seconds before making taco");
@@ -80,11 +80,11 @@ public class RecipeRepo {
     recommendationRecipes.put(recipe.getId(), Arrays.asList(6L, 2L, 5L));
 
     recipe = new Recipe(4L, "Chicken Parm", "recipe-4.png");
-    recipe.addIngredient(new Ingredient(ingredientItemMap.get(11L), 1D));
-    recipe.addIngredient(new Ingredient(ingredientItemMap.get(6L), 0.67));
-    recipe.addIngredient(new Ingredient(ingredientItemMap.get(4L), 0.5));
-    recipe.addIngredient(new Ingredient(ingredientItemMap.get(2L), 0.25));
-    recipe.addIngredient(new Ingredient(ingredientItemMap.get(5L), 0.2));
+    recipe.addIngredient(new Ingredient(ingredientItemMap.get(11L), 6D));
+    recipe.addIngredient(new Ingredient(ingredientItemMap.get(6L), 2D));
+    recipe.addIngredient(new Ingredient(ingredientItemMap.get(4L), 7D));
+    recipe.addIngredient(new Ingredient(ingredientItemMap.get(2L), 0.5));
+    recipe.addIngredient(new Ingredient(ingredientItemMap.get(5L), 4D));
     recipe.addDirection("Cover pan in oil and heat to sizzle");
     recipe.addDirection("Cover raw chicken in bread crumbs and then cook in oiled pan");
     recipe.addDirection("Preheat oven to 425 degrees");
@@ -95,10 +95,10 @@ public class RecipeRepo {
     recommendationRecipes.put(recipe.getId(), Arrays.asList(2L, 6L, 3L));
 
     recipe = new Recipe(5L, "Chicken Enchilada", "recipe-5.png");
-    recipe.addIngredient(new Ingredient(ingredientItemMap.get(11L), 0.75));
-    recipe.addIngredient(new Ingredient(ingredientItemMap.get(9L), 0.33));
-    recipe.addIngredient(new Ingredient(ingredientItemMap.get(10L), 1D));
-    recipe.addIngredient(new Ingredient(ingredientItemMap.get(2L), 0.25));
+    recipe.addIngredient(new Ingredient(ingredientItemMap.get(11L), 5D));
+    recipe.addIngredient(new Ingredient(ingredientItemMap.get(9L), 4D));
+    recipe.addIngredient(new Ingredient(ingredientItemMap.get(10L), 8D));
+    recipe.addIngredient(new Ingredient(ingredientItemMap.get(2L), 0.5));
     recipe.addDirection("Cook chicken in preferred method");
     recipe.addDirection("Dice or shred chicken");
     recipe.addDirection("Add mozzarella, mushrooms, and chicken to tortilla");
@@ -108,10 +108,10 @@ public class RecipeRepo {
     recommendationRecipes.put(recipe.getId(), Arrays.asList(3L, 4L, 1L));
 
     recipe = new Recipe(6L, "Chicken Marsala", "recipe-6.png");
-    recipe.addIngredient(new Ingredient(ingredientItemMap.get(11L), 1.25));
-    recipe.addIngredient(new Ingredient(ingredientItemMap.get(9L), 0.34));
-    recipe.addIngredient(new Ingredient(ingredientItemMap.get(5L), 0.2));
-    recipe.addIngredient(new Ingredient(ingredientItemMap.get(12L), 0.5));
+    recipe.addIngredient(new Ingredient(ingredientItemMap.get(11L), 7D));
+    recipe.addIngredient(new Ingredient(ingredientItemMap.get(9L), 4D));
+    recipe.addIngredient(new Ingredient(ingredientItemMap.get(5L), 4D));
+    recipe.addIngredient(new Ingredient(ingredientItemMap.get(12L), 4D));
     recipe.addDirection("Cover pan in oil and heat to sizzle");
     recipe.addDirection("Heat chicken in pan for 3 minutes then flip and heat for 3 additional minutes");
     recipe.addDirection("Add mushrooms and chicken broth to pan for an additional minute");
