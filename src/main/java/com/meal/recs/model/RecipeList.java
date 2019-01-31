@@ -1,10 +1,6 @@
 package com.meal.recs.model;
 
-import org.springframework.web.bind.annotation.ModelAttribute;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,5 +23,34 @@ public class RecipeList {
     }
 
     recipeMap.put(recipe.getId(), recipe);
+  }
+
+  public void removeRecipe(Long recipeId) {
+    recipeMap.remove(recipeId);
+  }
+
+  public  Map<Long, Ingredient> getTotalIngredients() {
+    Map<Long, Ingredient> ingredientTotals = new HashMap<>();
+    for(Map.Entry<Long, Recipe> entry : recipeMap.entrySet()) {
+      Recipe recipe = entry.getValue();
+
+      for(Map.Entry<Long, Ingredient> ingredientEntry : recipe.getIngredients().entrySet()) {
+        Ingredient ingredient = ingredientEntry.getValue();
+
+        if(ingredient.isSelected()) {
+          Ingredient sumIngredient = ingredientTotals.get(ingredient.getItem().getId());
+
+          if (sumIngredient != null) {
+            sumIngredient.setAmount(sumIngredient.getAmount() + ingredient.getAmount());
+          } else {
+            sumIngredient = new Ingredient(ingredient.getItem(), ingredient.getAmount());
+
+            ingredientTotals.put(ingredient.getItem().getId(), sumIngredient);
+          }
+        }
+      }
+    }
+
+    return ingredientTotals;
   }
 }

@@ -24,33 +24,66 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="row">
-                    <div class="col-md-12" style="padding-left: 4px;"><h4 style="color: #404040;">Recipes Included</h4></div>
+                    <div class="col-md-12"><h4>Recipes Included</h4></div>
                 </div>
                 <div class="row">
-                    <div class="col-md-10">
+                    <div class="col-md-12" style="padding-left: 24px;">
                         <div class="row recipe-list-box" th:each="recipeKeyValue : ${recipeList.recipeMap}">
-                            <div class="col-md-4" style="padding-left: 4px; padding-right: 4px;">
+                            <div class="col-md-4" style="padding-left:4px;padding-right:4px;">
                                 <a th:href="@{/recipe/{id}(id=${recipeKeyValue.value.id})}">
-                                <div class="border recipe-list-img-box">
-                                    <img th:src="@{/images/{pic}(pic=${recipeKeyValue.value.picture})}" />
-                                </div>
+                                    <div class="border recipe-list-img-box">
+                                        <img th:src="@{/images/{pic}(pic=${recipeKeyValue.value.picture})}" />
+                                    </div>
                                 </a>
                             </div>
-                            <div class="col-md-8" style="padding-left: 4px; padding-right: 4px; margin: auto;">
-                                <a th:href="@{/recipe/{id}(id=${recipeKeyValue.value.id})}" th:text="${recipeKeyValue.value.name}" style="font-size: 14pt"></a>
+                            <div class="col-md-6" style="padding-left:4px;padding-right:4px;margin:auto;">
+                                <a th:href="@{/recipe/{id}(id=${recipeKeyValue.value.id})}" th:text="${recipeKeyValue.value.name}" style="font-size: 15pt"></a>
+                            </div>
+                            <div class="col-md-2" style="padding-left:4px;padding-right:6px;margin:auto;">
+                                <a th:href="@{/recipe/list/remove?id={id}(id=${recipeKeyValue.value.id})}" class="close btn-close-hidden"><span aria-hidden="true">&times;</span></a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6" style="padding-left: 80px;">
                 <div class="row">
                     <div class="col-md-12"><h4>Total Ingredients Needed</h4></div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">CALCULATE TOTAL INGREDIENTS HERE</div>
+                    <div class="col-md-12">
+                        <div class="row" th:each="totalKeyValue : ${recipeList.totalIngredients}">
+                            <div class="col-md-4">
+                                <span th:text="${totalKeyValue.value.amountAsString + ' ' + totalKeyValue.value.item.unit}" style="font-size: 13pt"></span>
+                            </div>
+                            <div class="col-md-8">
+                                <span th:text="${totalKeyValue.value.item.name}" style="font-size: 13pt"></span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
+
+        <div class="row" style="margin-top: 60px;">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>Meal Recommendations</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4" th:each="recRecipe : ${recommendationRecipes}">
+                        <a th:href="@{/recipe/{id}(id=${recRecipe.id})}">
+                            <div class="recipe-rec-box border">
+                                <div class="recipe-rec-img-box"><img th:src="@{/images/{pic}(pic=${recRecipe.picture})}" /></div>
+                                <div class="recipe-rec-text"><a th:href="@{/recipe/{id}(id=${recRecipe.id})}" th:text="${recRecipe.name}"></a></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
     </div>
 </main>

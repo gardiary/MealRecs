@@ -2,14 +2,9 @@ body {
     padding-top: 5rem;
     padding-bottom: 2rem;
     background-color: #FAFAFA;
-    /*font-family: Times, "Times New Roman", serif;*/
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #404040
 }
-
-/*#wrapper {
-	width: 90%;
-	margin: auto;
-}*/
 
 a {
     font-size: 16pt;
@@ -18,15 +13,15 @@ a {
     text-decoration: none;
 }
 a:hover {
-    color: #117a8b;
+    color: #083C45;
     text-decoration: none;
 }
 
 .a-recipe-list {
-    color: #000000;
+    color: #404040;
 }
 .a-recipe-list:hover {
-    color: #404040;
+    color: #000000;
 }
 
 .btn-mr-1 {
@@ -38,12 +33,15 @@ a:hover {
     border-radius: 0;
 }
 
+.btn-close-hidden {
+    display: none;
+}
+
 .recipe-prev-box {
     height: 250px;
     padding: 4px;
 }
 .recipe-prev-box:hover {
-    /*background-color: #C1E4F4;*/
     background-color: #DAF7A6;
 }
 
@@ -73,7 +71,6 @@ a:hover {
     padding: 2px;
 }
 .recipe-rec-box:hover {
-    /*background-color: #C1E4F4;*/
     background-color: #DAF7A6;
 }
 
@@ -98,11 +95,16 @@ a:hover {
 
 .recipe-list-box {
     margin-bottom: 6px;
-    padding: 4px 4px 4px 0;
+    padding: 6px 0 6px 2px;
 }
 .recipe-list-box:hover {
     background-color: #DAF7A6;
 }
+
+.recipe-list-box:hover .btn-close-hidden {
+    display: inline-block;
+}
+
 .recipe-list-img-box {
     padding: 2px;
     height: 70px;

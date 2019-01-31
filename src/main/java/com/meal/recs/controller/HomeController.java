@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Enumeration;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.Set;
 
 /**
  * Created by gardiary on 22/01/19.
@@ -76,7 +77,27 @@ public class HomeController {
     public String recipeList(Model model, @ModelAttribute("recipeList") RecipeList recipeList) {
         model.addAttribute("recipeList", recipeList);
 
+        Random random = new Random();
+        if(recipeList.getRecipeMap().size() > 0) {
+            Set<Long> keySet = recipeList.getRecipeMap().keySet();
+            List<Long> keys = new ArrayList<>(keySet);
+            Long id = keys.get(random.nextInt(recipeList.getRecipeMap().size()));
+
+            model.addAttribute("recommendationRecipes", RecipeRepo.getRecommendationRecipes(id));
+        } else {
+            Integer id = random.nextInt(6) + 1;
+
+            model.addAttribute("recommendationRecipes", RecipeRepo.getRecommendationRecipes(Long.valueOf(id)));
+        }
+
         return "recipeList";
+    }
+
+    @RequestMapping(path = "/recipe/list/remove", method = RequestMethod.GET)
+    public String recipeListRemove(@RequestParam("id") Long id, @ModelAttribute("recipeList") RecipeList recipeList, Model model) {
+        recipeList.removeRecipe(id);
+
+        return "redirect:/recipe/list";
     }
 
     private void manageIngredients(Recipe recipe, List<Long> selectedIngredients) {
@@ -94,23 +115,4 @@ public class HomeController {
             ingredient.setSelected(selected);
         }
     }
-
-    protected void printParameters(HttpServletRequest request) {
-        System.out.println("All parameters:");
-        System.out.println("---------------");
-        Enumeration<String> parameterNames = request.getParameterNames();
-        while (parameterNames.hasMoreElements()) {
-
-            String paramName = parameterNames.nextElement();
-            System.out.println("Param Name : " + paramName);
-
-            String[] paramValues = request.getParameterValues(paramName);
-            for (int i = 0; i < paramValues.length; i++) {
-                String paramValue = paramValues[i];
-                System.out.println("Value : " + paramValue);
-            }
-
-        }
-    }
-
 }

@@ -37,13 +37,13 @@
                         <h4><label for="ingredients">Ingredients</label></h4>
                         <div id="ingredients" style="">
                             <div class="row" th:each="ingredient : ${recipe.ingredients}">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="checkbox checkbox-success">
                                         <input type="checkbox" name="ingredient" class="styled" th:id="'ingredient'+${ingredient.value.item.id}" th:value="${ingredient.value.item.id}" th:checked="${ingredient.value.selected}" />
                                         <label th:for="'ingredient'+${ingredient.value.item.id}" th:text="${ingredient.value.amountAsString + ' ' + ingredient.value.item.unit}"></label>
                                     </div>
                                 </div>
-                                <div class="col-md-6"><label th:for="'ingredient'+${ingredient.value.item.id}" th:text="${ingredient.value.item.name}"></label></div>
+                                <div class="col-md-6" style="padding-left: 6px;"><label th:for="'ingredient'+${ingredient.value.item.id}" th:text="${ingredient.value.item.name}"></label></div>
                             </div>
                         </div>
                     </div>
