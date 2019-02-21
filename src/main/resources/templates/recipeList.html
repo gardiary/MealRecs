@@ -54,9 +54,12 @@
                     <div class="col-md-12">
                         <div class="row" th:each="totalKeyValue : ${recipeList.totalIngredients}">
                             <div class="col-md-4">
+                                <span th:text="${totalKeyValue.value.packageCountText}" style="font-size: 13pt"></span>
+                            </div>
+                            <div class="col-md-4">
                                 <span th:text="${totalKeyValue.value.amountAsString + ' ' + totalKeyValue.value.item.unit}" style="font-size: 13pt"></span>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-md-4">
                                 <span th:text="${totalKeyValue.value.item.name}" style="font-size: 13pt"></span>
                             </div>
                         </div>

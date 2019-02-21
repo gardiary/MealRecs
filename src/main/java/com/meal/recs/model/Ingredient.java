@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 public class Ingredient {
   private IngredientItem item;
   private Double amount;
+  private String packageCountText;
   private boolean selected = true;
 
   public Ingredient() {
@@ -38,6 +39,14 @@ public class Ingredient {
     BigDecimal am = BigDecimal.valueOf(amount);
 
     return am.stripTrailingZeros().toPlainString();
+  }
+
+  public String getPackageCountText() {
+    return packageCountText;
+  }
+
+  public void setPackageCountText(String packageCountText) {
+    this.packageCountText = packageCountText;
   }
 
   public boolean isSelected() {

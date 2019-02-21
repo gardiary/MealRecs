@@ -2,6 +2,7 @@ package com.meal.recs.repo;
 
 import com.meal.recs.model.Ingredient;
 import com.meal.recs.model.IngredientItem;
+import com.meal.recs.model.IngredientPackage;
 import com.meal.recs.model.Recipe;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class RecipeRepo {
   private static Map<Long, Recipe> recipeMap;
   private static Map<Long, List<Long>> recommendationRecipes;
   private static Map<Long, IngredientItem> ingredientItemMap;
+  private static Map<Long, IngredientPackage> ingredientPackageMap;
 
   static {
     recipes = new ArrayList<>();
@@ -30,13 +32,27 @@ public class RecipeRepo {
     ingredientItemMap.put(3L, new IngredientItem(3L, "Ground Beef", "lbs"));
     ingredientItemMap.put(4L, new IngredientItem(4L, "Red Sauce", "oz"));
     ingredientItemMap.put(5L, new IngredientItem(5L, "Olive Oil", "tbsp"));
-    ingredientItemMap.put(6L, new IngredientItem(6L, "Bread Crumbs", "cup"));
+    ingredientItemMap.put(6L, new IngredientItem(6L, "Bread Crumbs", "cups"));
     ingredientItemMap.put(7L, new IngredientItem(7L, "Tomatoes", ""));
     ingredientItemMap.put(8L, new IngredientItem(8L, "Lettuce", "cups"));
     ingredientItemMap.put(9L, new IngredientItem(9L, "Mushrooms", "oz sliced"));
-    ingredientItemMap.put(10L, new IngredientItem(10L, "Tortillas", ""));
+    ingredientItemMap.put(10L, new IngredientItem(10L, "Tortillas", "pcs"));
     ingredientItemMap.put(11L, new IngredientItem(11L, "Chicken", "pcs"));
     ingredientItemMap.put(12L, new IngredientItem(12L, "Chicken Broth", "cups"));
+
+    ingredientPackageMap = new HashMap<>();
+    ingredientPackageMap.put(1L, new IngredientPackage(1L, "Box", ingredientItemMap.get(1L), 1D));
+    ingredientPackageMap.put(2L, new IngredientPackage(2L, "Bag", ingredientItemMap.get(2L), 1D));
+    ingredientPackageMap.put(3L, new IngredientPackage(3L, "Lbs", ingredientItemMap.get(3L), 1D));
+    ingredientPackageMap.put(4L, new IngredientPackage(4L, "Jar", ingredientItemMap.get(4L), 14D));
+    ingredientPackageMap.put(5L, new IngredientPackage(5L, "Bottle", ingredientItemMap.get(5L), 34D));
+    ingredientPackageMap.put(6L, new IngredientPackage(6L, "Can", ingredientItemMap.get(6L), 1.5));
+    ingredientPackageMap.put(7L, new IngredientPackage(7L, "", ingredientItemMap.get(7L), 1D));
+    ingredientPackageMap.put(8L, new IngredientPackage(8L, "Head", ingredientItemMap.get(8L), 6D));
+    ingredientPackageMap.put(9L, new IngredientPackage(9L, "", ingredientItemMap.get(9L), 12D));
+    ingredientPackageMap.put(10L, new IngredientPackage(10L, "Bag", ingredientItemMap.get(10L), 8D));
+    ingredientPackageMap.put(11L, new IngredientPackage(11L, "Lbs", ingredientItemMap.get(11L), 6D));
+    ingredientPackageMap.put(12L, new IngredientPackage(12L, "Carton", ingredientItemMap.get(12L), 4D));
 
     Recipe recipe = new Recipe(1L, "Baked Ziti", "recipe-1.png");
     recipe.addIngredient(new Ingredient(ingredientItemMap.get(1L), 1D));
@@ -164,6 +180,10 @@ public class RecipeRepo {
 
   public static IngredientItem getIngredientItem(Long id) {
     return ingredientItemMap.get(id);
+  }
+
+  public static IngredientPackage getIngredientPackage(Long id) {
+    return ingredientPackageMap.get(id);
   }
 
 }

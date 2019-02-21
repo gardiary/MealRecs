@@ -1,5 +1,7 @@
 package com.meal.recs.model;
 
+import com.meal.recs.repo.RecipeRepo;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,6 +51,17 @@ public class RecipeList {
           }
         }
       }
+    }
+
+    // calculate package here
+    for(Map.Entry<Long, Ingredient> entry : ingredientTotals.entrySet()) {
+      Ingredient ingredient = entry.getValue();
+
+      IngredientPackage ingredientPackage = RecipeRepo.getIngredientPackage(ingredient.getItem().getId());
+
+      Double packageCount = Math.ceil(ingredient.getAmount() / ingredientPackage.getItemPackage());
+
+      ingredient.setPackageCountText(packageCount.intValue() + " " + ingredientPackage.getUnit());
     }
 
     return ingredientTotals;
