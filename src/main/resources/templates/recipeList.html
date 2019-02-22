@@ -77,16 +77,24 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4" th:each="recRecipe : ${recommendationRecipes}">
-                        <a th:href="@{/recipe/{id}(id=${recRecipe.id})}">
-                            <div class="recipe-rec-box border">
-                                <div class="recipe-rec-img-box"><img th:src="@{/images/{pic}(pic=${recRecipe.picture})}" /></div>
-                                <div class="recipe-rec-text"><a th:href="@{/recipe/{id}(id=${recRecipe.id})}" th:text="${recRecipe.name}"></a></div>
+                        <div class="row" style="margin-bottom:4px;padding-left:2px;padding-right:2px" th:if="not ${recipeList.totalIngredients.isEmpty()}">
+                            <div class="col-md-12" style="">
+                                <a class="btn a-rec-recipe" style="width:100%;" th:href="@{/recipe/{id}(id=${recRecipe.id})}" th:text="${recRecipe.recommendationMessage}"></a>
                             </div>
-                        </a>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a th:href="@{/recipe/{id}(id=${recRecipe.id})}">
+                                    <div class="recipe-rec-box border">
+                                        <div class="recipe-rec-img-box"><img th:src="@{/images/{pic}(pic=${recRecipe.picture})}" /></div>
+                                        <div class="recipe-rec-text"><a th:href="@{/recipe/{id}(id=${recRecipe.id})}" th:text="${recRecipe.name}"></a></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
     </div>
 </main>

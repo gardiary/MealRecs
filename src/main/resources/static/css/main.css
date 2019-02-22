@@ -24,6 +24,18 @@ a:hover {
     color: #000000;
 }
 
+.a-rec-recipe {
+    background-color: #FF5733;
+    border-radius: 0;
+    font-size: 11pt;
+    color: white;
+    padding: 2px 0;
+}
+.a-rec-recipe:hover {
+    background-color: #c25528;
+    color: white;
+}
+
 .btn-mr-1 {
     background-color: #FF5733;
     border-radius: 0;

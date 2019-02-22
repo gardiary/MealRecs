@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 public class Ingredient {
   private IngredientItem item;
   private Double amount;
+  private int packageCount;
   private String packageCountText;
   private boolean selected = true;
 
@@ -41,6 +42,14 @@ public class Ingredient {
     return am.stripTrailingZeros().toPlainString();
   }
 
+  public int getPackageCount() {
+    return packageCount;
+  }
+
+  public void setPackageCount(int packageCount) {
+    this.packageCount = packageCount;
+  }
+
   public String getPackageCountText() {
     return packageCountText;
   }
@@ -62,6 +71,7 @@ public class Ingredient {
     return "Ingredient[" +
             "item=" + item +
             ", amount=" + amount +
+            ", packageCount=" + packageCount +
             ", selected=" + selected +
             ']';
   }

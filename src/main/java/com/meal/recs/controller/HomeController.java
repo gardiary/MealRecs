@@ -1,6 +1,7 @@
 package com.meal.recs.controller;
 
 import com.meal.recs.model.Ingredient;
+import com.meal.recs.model.IngredientPackage;
 import com.meal.recs.model.Recipe;
 import com.meal.recs.model.RecipeList;
 import com.meal.recs.repo.RecipeRepo;
@@ -14,10 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by gardiary on 22/01/19.
@@ -77,17 +75,85 @@ public class HomeController {
     public String recipeList(Model model, @ModelAttribute("recipeList") RecipeList recipeList) {
         model.addAttribute("recipeList", recipeList);
 
+        List<Recipe> recommendationRecipes;
         Random random = new Random();
         if(recipeList.getRecipeMap().size() > 0) {
             Set<Long> keySet = recipeList.getRecipeMap().keySet();
             List<Long> keys = new ArrayList<>(keySet);
             Long id = keys.get(random.nextInt(recipeList.getRecipeMap().size()));
 
-            model.addAttribute("recommendationRecipes", RecipeRepo.getRecommendationRecipes(id));
+            recommendationRecipes = RecipeRepo.getRecommendationRecipes(id);
+            model.addAttribute("recommendationRecipes", recommendationRecipes);
         } else {
             Integer id = random.nextInt(6) + 1;
 
-            model.addAttribute("recommendationRecipes", RecipeRepo.getRecommendationRecipes(Long.valueOf(id)));
+            recommendationRecipes = RecipeRepo.getRecommendationRecipes(Long.valueOf(id));
+            model.addAttribute("recommendationRecipes", recommendationRecipes);
+        }
+
+        // determine recommendation recipes ingredients here
+        Map<Long, Ingredient> totalIngredients = recipeList.getTotalIngredients();
+
+        if(totalIngredients.size() > 0) {
+            /*System.out.println("Total Ingredients:");
+            for(Map.Entry<Long, Ingredient> entry : totalIngredients.entrySet()) {
+                Ingredient ingredient = entry.getValue();
+
+                IngredientPackage ingredientPackage = RecipeRepo.getIngredientPackage(ingredient.getItem().getId());
+                Double totalX = ingredient.getPackageCount() * ingredientPackage.getItemPackage();
+                Double remainingX = totalX - ingredient.getAmount();
+
+                System.out.println("- " + ingredient.getItem().getName() + " : " +
+                        ingredient.getAmountAsString() + " " + ingredient.getItem().getUnit() + ", " +
+                        ingredient.getPackageCountText() + "  (total: " + totalX + ", remaining: " + remainingX + ")");
+            }
+
+            System.out.println();*/
+
+            for (Recipe recipe : recommendationRecipes) {
+                Map<Long, Ingredient> ingredients = recipe.getIngredients();
+
+                //System.out.println("[" + recipe.getName() + "]");
+                //System.out.println("Ingredients:");
+
+                List<Ingredient> neededIngredients = new ArrayList<>();
+
+                for(Map.Entry<Long, Ingredient> entry : ingredients.entrySet()) {
+                    Ingredient ingre = entry.getValue();
+
+                    Ingredient checkIngredient = totalIngredients.get(ingre.getItem().getId());
+                    //Boolean ingredientAvailable = false;
+
+                    if(checkIngredient != null) {
+                        IngredientPackage ingredientPackage = RecipeRepo.getIngredientPackage(checkIngredient.getItem().getId());
+                        Double total = checkIngredient.getPackageCount() * ingredientPackage.getItemPackage();
+                        Double remaining = total - checkIngredient.getAmount();
+
+                        if(ingre.getAmount() <= remaining) {
+                            //ingredientAvailable = true;
+                        } else {
+                            neededIngredients.add(ingre);
+                        }
+                    } else {
+                        neededIngredients.add(ingre);
+                    }
+
+                    //System.out.println("- " + ingre.getItem().getName() + " : " +
+                    //        ingre.getAmountAsString() + " " + ingre.getItem().getUnit() + "  (available : " + ingredientAvailable + ")");
+                }
+
+                if(neededIngredients.size() == 0) {
+                    recipe.setRecommendationMessage("Add Recipe");
+                } else {
+                    if(neededIngredients.size() == 1) {
+                        recipe.setRecommendationMessage("Add " + neededIngredients.get(0).getItem().getName());
+                    } else {
+                        recipe.setRecommendationMessage("Add " + neededIngredients.size() + " ingredients");
+                    }
+                }
+
+                System.out.println();
+            }
         }
 
         return "recipeList";

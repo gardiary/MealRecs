@@ -12,7 +12,7 @@ public class Recipe {
   private Long id;
   private String name;
   private String picture;
-  //private List<Ingredient> ingredients;
+  private String recommendationMessage;
   private Map<Long, Ingredient> ingredients = new HashMap<>();
   private List<String> directions;
 
@@ -49,13 +49,13 @@ public class Recipe {
     this.picture = picture;
   }
 
-  /*public List<Ingredient> getIngredients() {
-    return ingredients;
+  public String getRecommendationMessage() {
+    return recommendationMessage;
   }
 
-  public void setIngredients(List<Ingredient> ingredients) {
-    this.ingredients = ingredients;
-  }*/
+  public void setRecommendationMessage(String recommendationMessage) {
+    this.recommendationMessage = recommendationMessage;
+  }
 
   public Map<Long, Ingredient> getIngredients() {
     return ingredients;

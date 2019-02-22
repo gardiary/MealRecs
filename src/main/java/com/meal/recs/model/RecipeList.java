@@ -33,35 +33,39 @@ public class RecipeList {
 
   public  Map<Long, Ingredient> getTotalIngredients() {
     Map<Long, Ingredient> ingredientTotals = new HashMap<>();
-    for(Map.Entry<Long, Recipe> entry : recipeMap.entrySet()) {
-      Recipe recipe = entry.getValue();
 
-      for(Map.Entry<Long, Ingredient> ingredientEntry : recipe.getIngredients().entrySet()) {
-        Ingredient ingredient = ingredientEntry.getValue();
+    if(recipeMap.size() > 0) {
+      for (Map.Entry<Long, Recipe> entry : recipeMap.entrySet()) {
+        Recipe recipe = entry.getValue();
 
-        if(ingredient.isSelected()) {
-          Ingredient sumIngredient = ingredientTotals.get(ingredient.getItem().getId());
+        for (Map.Entry<Long, Ingredient> ingredientEntry : recipe.getIngredients().entrySet()) {
+          Ingredient ingredient = ingredientEntry.getValue();
 
-          if (sumIngredient != null) {
-            sumIngredient.setAmount(sumIngredient.getAmount() + ingredient.getAmount());
-          } else {
-            sumIngredient = new Ingredient(ingredient.getItem(), ingredient.getAmount());
+          if (ingredient.isSelected()) {
+            Ingredient sumIngredient = ingredientTotals.get(ingredient.getItem().getId());
 
-            ingredientTotals.put(ingredient.getItem().getId(), sumIngredient);
+            if (sumIngredient != null) {
+              sumIngredient.setAmount(sumIngredient.getAmount() + ingredient.getAmount());
+            } else {
+              sumIngredient = new Ingredient(ingredient.getItem(), ingredient.getAmount());
+
+              ingredientTotals.put(ingredient.getItem().getId(), sumIngredient);
+            }
           }
         }
       }
-    }
 
-    // calculate package here
-    for(Map.Entry<Long, Ingredient> entry : ingredientTotals.entrySet()) {
-      Ingredient ingredient = entry.getValue();
+      // calculate package here
+      for (Map.Entry<Long, Ingredient> entry : ingredientTotals.entrySet()) {
+        Ingredient ingredient = entry.getValue();
 
-      IngredientPackage ingredientPackage = RecipeRepo.getIngredientPackage(ingredient.getItem().getId());
+        IngredientPackage ingredientPackage = RecipeRepo.getIngredientPackage(ingredient.getItem().getId());
 
-      Double packageCount = Math.ceil(ingredient.getAmount() / ingredientPackage.getItemPackage());
+        Double packageCount = Math.ceil(ingredient.getAmount() / ingredientPackage.getItemPackage());
 
-      ingredient.setPackageCountText(packageCount.intValue() + " " + ingredientPackage.getUnit());
+        ingredient.setPackageCount(packageCount.intValue());
+        ingredient.setPackageCountText(packageCount.intValue() + " " + ingredientPackage.getUnit());
+      }
     }
 
     return ingredientTotals;
