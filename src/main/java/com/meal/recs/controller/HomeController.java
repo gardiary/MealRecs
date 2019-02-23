@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by gardiary on 22/01/19.
@@ -37,10 +38,40 @@ public class HomeController {
     }
 
     @RequestMapping(path = "/recipe/{id}", method = RequestMethod.GET)
-    public String recipe(@PathVariable("id") Long id, Model model, @ModelAttribute("recipeList") RecipeList recipeList) {
-        model.addAttribute("recipe", RecipeRepo.getRecipe(id));
+    public String recipe(@PathVariable("id") Long id, Model model,
+                         @RequestParam(value = "crossCheck", required = false) String crossCheck,
+                         @ModelAttribute("recipeList") RecipeList recipeList) {
+        Recipe recipe = RecipeRepo.getRecipe(id);
+
+        if(crossCheck != null && crossCheck.equals("1")) {
+            Map<Long, Ingredient> totalIngredients = recipeList.getTotalIngredients();
+
+            if(totalIngredients.size() > 0) {
+                Map<Long, Ingredient> ingredients = recipe.getIngredients();
+
+                for (Map.Entry<Long, Ingredient> entry : ingredients.entrySet()) {
+                    Ingredient ingredient = entry.getValue();
+                    Ingredient checkIngredient = totalIngredients.get(ingredient.getItem().getId());
+
+                    if (checkIngredient != null) {
+                        IngredientPackage ingredientPackage = RecipeRepo.getIngredientPackage(checkIngredient.getItem().getId());
+                        Double total = checkIngredient.getPackageCount() * ingredientPackage.getItemPackage();
+                        Double remaining = total - checkIngredient.getAmount();
+
+                        if (ingredient.getAmount() <= remaining) {
+                            ingredient.setSelected(false);
+                        } else {
+                            ingredient.setSelected(true);
+                        }
+                    } else {
+                        ingredient.setSelected(true);
+                    }
+                }
+            }
+        }
+
+        model.addAttribute("recipe", recipe);
         model.addAttribute("recommendationRecipes", RecipeRepo.getRecommendationRecipes(id));
-        model.addAttribute("recipeList", recipeList);
 
         return "recipe";
     }
@@ -71,24 +102,74 @@ public class HomeController {
         return "recipe";
     }
 
+    @RequestMapping(path = "/recipe/{id}/add", method = RequestMethod.GET)
+    public String recipeAdd(@PathVariable("id") Long id,
+                            @RequestParam(value = "crossCheck", required = false) String crossCheck,
+                            @ModelAttribute("recipeList") RecipeList recipeList) {
+        Recipe recipe = RecipeRepo.getRecipe(id);
+
+        if(crossCheck != null && crossCheck.equals("1")) {
+            Map<Long, Ingredient> totalIngredients = recipeList.getTotalIngredients();
+
+            if(totalIngredients.size() > 0) {
+                for (Map.Entry<Long, Ingredient> entry : recipe.getIngredients().entrySet()) {
+                    Ingredient ingredient = entry.getValue();
+                    Ingredient checkIngredient = totalIngredients.get(ingredient.getItem().getId());
+
+                    if (checkIngredient != null) {
+                        IngredientPackage ingredientPackage = RecipeRepo.getIngredientPackage(checkIngredient.getItem().getId());
+                        Double total = checkIngredient.getPackageCount() * ingredientPackage.getItemPackage();
+                        Double remaining = total - checkIngredient.getAmount();
+
+                        if (ingredient.getAmount() <= remaining) {
+                            ingredient.setSelected(false);
+                        } else {
+                            ingredient.setSelected(true);
+                        }
+                    } else {
+                        ingredient.setSelected(true);
+                    }
+                }
+            }
+        } else {
+            for (Map.Entry<Long, Ingredient> entry : recipe.getIngredients().entrySet()) {
+                Ingredient ingredient = entry.getValue();
+                ingredient.setSelected(true);
+            }
+        }
+
+        recipeList.addRecipe(recipe);
+
+        return "redirect:/recipe/list";
+    }
+
     @RequestMapping(path = "/recipe/list", method = RequestMethod.GET)
     public String recipeList(Model model, @ModelAttribute("recipeList") RecipeList recipeList) {
         model.addAttribute("recipeList", recipeList);
 
-        List<Recipe> recommendationRecipes;
+        List<Recipe> recommendationRecipes = new ArrayList<>();
         Random random = new Random();
         if(recipeList.getRecipeMap().size() > 0) {
             Set<Long> keySet = recipeList.getRecipeMap().keySet();
             List<Long> keys = new ArrayList<>(keySet);
-            Long id = keys.get(random.nextInt(recipeList.getRecipeMap().size()));
+            //Long id = keys.get(random.nextInt(recipeList.getRecipeMap().size()));
 
-            recommendationRecipes = RecipeRepo.getRecommendationRecipes(id);
-            model.addAttribute("recommendationRecipes", recommendationRecipes);
+            List<Recipe> recommendationRecipesCandidate = RecipeRepo.getRecipes().stream()
+                    .filter(rec -> recipeList.getRecipeMap().get(rec.getId()) == null)
+                    .collect(Collectors.toList());
+
+            if(recommendationRecipesCandidate != null && recommendationRecipesCandidate.size() > 0) {
+                if(recommendationRecipesCandidate.size() <= 3) {
+                    recommendationRecipes = recommendationRecipesCandidate;
+                } else {
+                    recommendationRecipes = recommendationRecipesCandidate.subList(0, 3);   // pick 3
+                }
+            }
+
         } else {
             Integer id = random.nextInt(6) + 1;
 
             recommendationRecipes = RecipeRepo.getRecommendationRecipes(Long.valueOf(id));
-            model.addAttribute("recommendationRecipes", recommendationRecipes);
         }
 
         // determine recommendation recipes ingredients here
@@ -107,7 +188,6 @@ public class HomeController {
                         ingredient.getAmountAsString() + " " + ingredient.getItem().getUnit() + ", " +
                         ingredient.getPackageCountText() + "  (total: " + totalX + ", remaining: " + remainingX + ")");
             }
-
             System.out.println();*/
 
             for (Recipe recipe : recommendationRecipes) {
@@ -152,9 +232,18 @@ public class HomeController {
                     }
                 }
 
-                System.out.println();
+                recipe.setNeededIngredients(neededIngredients);
+                //System.out.println();
             }
+
+            // sort by least ingredients
+            recommendationRecipes = recommendationRecipes.stream()
+                    .sorted((rec1, rec2) -> Integer.valueOf(rec1.getNeededIngredients().size()).
+                            compareTo(Integer.valueOf(rec2.getNeededIngredients().size())))
+                    .collect(Collectors.toList());
         }
+
+        model.addAttribute("recommendationRecipes", recommendationRecipes);
 
         return "recipeList";
     }

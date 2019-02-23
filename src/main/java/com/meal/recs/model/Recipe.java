@@ -15,6 +15,7 @@ public class Recipe {
   private String recommendationMessage;
   private Map<Long, Ingredient> ingredients = new HashMap<>();
   private List<String> directions;
+  private List<Ingredient> neededIngredients = new ArrayList<>();
 
   public Recipe() {
   }
@@ -73,6 +74,14 @@ public class Recipe {
     this.directions = directions;
   }
 
+  public List<Ingredient> getNeededIngredients() {
+    return neededIngredients;
+  }
+
+  public void setNeededIngredients(List<Ingredient> neededIngredients) {
+    this.neededIngredients = neededIngredients;
+  }
+
   public void addIngredient(Ingredient ingredient) {
     if(ingredients == null) {
       ingredients = new HashMap<>();
@@ -87,6 +96,25 @@ public class Recipe {
     }
 
     directions.add(direction);
+  }
+
+  public String getNeededIngredientsAsHtml() {
+    if(neededIngredients == null || neededIngredients.size() == 0) {
+      return "";
+    }
+
+    String html = "";
+    int i = 0;
+    for(Ingredient ingredient : neededIngredients) {
+      html += "<span>" + ingredient.getItem().getName() + "</span>";
+      i += 1;
+
+      if(i < neededIngredients.size()) {
+        html += "<br/>";
+      }
+    }
+
+    return html;
   }
 
   @Override

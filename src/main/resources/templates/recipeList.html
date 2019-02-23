@@ -56,9 +56,9 @@
                             <div class="col-md-4">
                                 <span th:text="${totalKeyValue.value.packageCountText}" style="font-size: 13pt"></span>
                             </div>
-                            <div class="col-md-4">
+                            <!--div class="col-md-4">
                                 <span th:text="${totalKeyValue.value.amountAsString + ' ' + totalKeyValue.value.item.unit}" style="font-size: 13pt"></span>
-                            </div>
+                            </div-->
                             <div class="col-md-4">
                                 <span th:text="${totalKeyValue.value.item.name}" style="font-size: 13pt"></span>
                             </div>
@@ -68,7 +68,7 @@
             </div>
         </div>
 
-        <div class="row" style="margin-top: 60px;">
+        <div class="row" style="margin-top: 60px;" th:if="not ${recommendationRecipes.isEmpty()}">
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-md-12">
@@ -79,12 +79,13 @@
                     <div class="col-md-4" th:each="recRecipe : ${recommendationRecipes}">
                         <div class="row" style="margin-bottom:4px;padding-left:2px;padding-right:2px" th:if="not ${recipeList.totalIngredients.isEmpty()}">
                             <div class="col-md-12" style="">
-                                <a class="btn a-rec-recipe" style="width:100%;" th:href="@{/recipe/{id}(id=${recRecipe.id})}" th:text="${recRecipe.recommendationMessage}"></a>
+                                <a class="btn a-rec-recipe" style="width:100%;" th:href="@{/recipe/{id}/add(id=${recRecipe.id},crossCheck=1)}" th:text="${recRecipe.recommendationMessage}"
+                                   data-toggle="popover" data-html="true" th:attr="data-content=${recRecipe.neededIngredientsAsHtml}" data-placement="top"></a>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <a th:href="@{/recipe/{id}(id=${recRecipe.id})}">
+                                <a th:href="@{/recipe/{id}(id=${recRecipe.id},crossCheck=1)}">
                                     <div class="recipe-rec-box border">
                                         <div class="recipe-rec-img-box"><img th:src="@{/images/{pic}(pic=${recRecipe.picture})}" /></div>
                                         <div class="recipe-rec-text"><a th:href="@{/recipe/{id}(id=${recRecipe.id})}" th:text="${recRecipe.name}"></a></div>
@@ -100,6 +101,12 @@
 </main>
 
 <th:block th:include="fragments/general :: jsscript"></th:block>
+
+<script type="text/javascript">
+    $(function () {
+        $('[data-toggle="popover"]').popover({ trigger: "hover" });
+    })
+</script>
 
 </body>
 </html>
