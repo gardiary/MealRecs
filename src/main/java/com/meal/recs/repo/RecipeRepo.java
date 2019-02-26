@@ -28,7 +28,7 @@ public class RecipeRepo {
 
     ingredientItemMap = new HashMap<>();
     ingredientItemMap.put(1L, new IngredientItem(1L, "Pasta", "box"));
-    ingredientItemMap.put(2L, new IngredientItem(2L, "Mozzerella", "cups"));
+    ingredientItemMap.put(2L, new IngredientItem(2L, "Mozzarella", "cups"));
     ingredientItemMap.put(3L, new IngredientItem(3L, "Ground Beef", "lbs"));
     ingredientItemMap.put(4L, new IngredientItem(4L, "Red Sauce", "oz"));
     ingredientItemMap.put(5L, new IngredientItem(5L, "Olive Oil", "tbsp"));
@@ -49,7 +49,7 @@ public class RecipeRepo {
     ingredientPackageMap.put(6L, new IngredientPackage(6L, "Can", ingredientItemMap.get(6L), 1.5));
     ingredientPackageMap.put(7L, new IngredientPackage(7L, "", ingredientItemMap.get(7L), 1D));
     ingredientPackageMap.put(8L, new IngredientPackage(8L, "Head", ingredientItemMap.get(8L), 6D));
-    ingredientPackageMap.put(9L, new IngredientPackage(9L, "", ingredientItemMap.get(9L), 12D));
+    ingredientPackageMap.put(9L, new IngredientPackage(9L, "Carton", ingredientItemMap.get(9L), 12D));
     ingredientPackageMap.put(10L, new IngredientPackage(10L, "Bag", ingredientItemMap.get(10L), 8D));
     ingredientPackageMap.put(11L, new IngredientPackage(11L, "Lbs", ingredientItemMap.get(11L), 6D));
     ingredientPackageMap.put(12L, new IngredientPackage(12L, "Carton", ingredientItemMap.get(12L), 4D));

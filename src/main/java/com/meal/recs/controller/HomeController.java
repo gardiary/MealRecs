@@ -151,7 +151,6 @@ public class HomeController {
         Random random = new Random();
         if(recipeList.getRecipeMap().size() > 0) {
             Set<Long> keySet = recipeList.getRecipeMap().keySet();
-            List<Long> keys = new ArrayList<>(keySet);
             //Long id = keys.get(random.nextInt(recipeList.getRecipeMap().size()));
 
             List<Recipe> recommendationRecipesCandidate = RecipeRepo.getRecipes().stream()
@@ -249,8 +248,12 @@ public class HomeController {
     }
 
     @RequestMapping(path = "/recipe/list/remove", method = RequestMethod.GET)
-    public String recipeListRemove(@RequestParam("id") Long id, @ModelAttribute("recipeList") RecipeList recipeList, Model model) {
+    public String recipeListRemove(@RequestParam("id") Long id, @ModelAttribute("recipeList") RecipeList recipeList) {
         recipeList.removeRecipe(id);
+
+        // reset ingredients state
+        Recipe recipe = RecipeRepo.getRecipe(id);
+        recipe.resetIngredientsState();
 
         return "redirect:/recipe/list";
     }

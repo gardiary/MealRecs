@@ -117,6 +117,13 @@ public class Recipe {
     return html;
   }
 
+  public void resetIngredientsState() {
+    for(Map.Entry<Long, Ingredient> entry : ingredients.entrySet()) {
+      Ingredient ingredient = entry.getValue();
+      ingredient.setSelected(true);
+    }
+  }
+
   @Override
   public String toString() {
     return "Recipe[" +

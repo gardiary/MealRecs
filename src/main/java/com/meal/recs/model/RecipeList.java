@@ -64,10 +64,30 @@ public class RecipeList {
         Double packageCount = Math.ceil(ingredient.getAmount() / ingredientPackage.getItemPackage());
 
         ingredient.setPackageCount(packageCount.intValue());
-        ingredient.setPackageCountText(packageCount.intValue() + " " + ingredientPackage.getUnit());
+        //ingredient.setPackageCountText(packageCount.intValue() + " " + ingredientPackage.getUnit());
+        ingredient.setPackageCountText(packageCount.intValue() + " " +
+                determineUnit(ingredientPackage, packageCount.intValue()) + ingredientPackage.getItem().getName());
       }
     }
 
     return ingredientTotals;
+  }
+
+  private String determineUnit(IngredientPackage ingredientPackage, int packageCount) {
+    if(!ingredientPackage.getUnit().equals("")) {
+      if(packageCount > 1) {
+        if(ingredientPackage.getUnit().equalsIgnoreCase("Box")) {
+          return ingredientPackage.getUnit() + "es of ";
+        } else if(ingredientPackage.getUnit().equalsIgnoreCase("Lbs")) {
+          return ingredientPackage.getUnit() + "'s of ";
+        } else {
+          return ingredientPackage.getUnit() + "s of ";
+        }
+      } else {
+        return ingredientPackage.getUnit() + " of ";
+      }
+    } else {
+      return "";
+    }
   }
 }
