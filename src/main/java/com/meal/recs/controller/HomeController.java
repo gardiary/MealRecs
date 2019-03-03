@@ -68,6 +68,8 @@ public class HomeController {
                     }
                 }
             }
+        } else if(recipeList.getRecipeMap().get(id) == null) {
+            recipe.resetIngredientsState();
         }
 
         model.addAttribute("recipe", recipe);
@@ -83,16 +85,18 @@ public class HomeController {
 
         if(selectedIngredients != null && selectedIngredients.size() > 0) {
             manageIngredients(recipe, selectedIngredients);
+        } else {    // uncheck all ingredients
+            recipe.resetIngredientsState(false);
+        }
 
-            int size1 = recipeList.getRecipeMap().size();
-            recipeList.addRecipe(recipe);
-            int size2 = recipeList.getRecipeMap().size();
+        int size1 = recipeList.getRecipeMap().size();
+        recipeList.addRecipe(recipe);
+        int size2 = recipeList.getRecipeMap().size();
 
-            if(size1 == size2) {
-                model.addAttribute("message", "Recipe successfully updated");
-            } else {
-                model.addAttribute("message", "Recipe successfully added");
-            }
+        if(size1 == size2) {
+            model.addAttribute("message", "Recipe successfully updated");
+        } else {
+            model.addAttribute("message", "Recipe successfully added");
         }
 
         model.addAttribute("recipe", RecipeRepo.getRecipe(id));

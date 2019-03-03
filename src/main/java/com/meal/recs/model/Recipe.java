@@ -124,6 +124,13 @@ public class Recipe {
     }
   }
 
+  public void resetIngredientsState(boolean state) {
+    for(Map.Entry<Long, Ingredient> entry : ingredients.entrySet()) {
+      Ingredient ingredient = entry.getValue();
+      ingredient.setSelected(state);
+    }
+  }
+
   @Override
   public String toString() {
     return "Recipe[" +

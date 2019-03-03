@@ -78,8 +78,6 @@ public class RecipeList {
       if(packageCount > 1) {
         if(ingredientPackage.getUnit().equalsIgnoreCase("Box")) {
           return ingredientPackage.getUnit() + "es of ";
-        } else if(ingredientPackage.getUnit().equalsIgnoreCase("Lbs")) {
-          return ingredientPackage.getUnit() + "'s of ";
         } else {
           return ingredientPackage.getUnit() + "s of ";
         }

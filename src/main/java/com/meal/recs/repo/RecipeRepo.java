@@ -43,7 +43,7 @@ public class RecipeRepo {
     ingredientPackageMap = new HashMap<>();
     ingredientPackageMap.put(1L, new IngredientPackage(1L, "Box", ingredientItemMap.get(1L), 1D));
     ingredientPackageMap.put(2L, new IngredientPackage(2L, "Bag", ingredientItemMap.get(2L), 1D));
-    ingredientPackageMap.put(3L, new IngredientPackage(3L, "Lbs", ingredientItemMap.get(3L), 1D));
+    ingredientPackageMap.put(3L, new IngredientPackage(3L, "Lb", ingredientItemMap.get(3L), 1D));
     ingredientPackageMap.put(4L, new IngredientPackage(4L, "Jar", ingredientItemMap.get(4L), 14D));
     ingredientPackageMap.put(5L, new IngredientPackage(5L, "Bottle", ingredientItemMap.get(5L), 34D));
     ingredientPackageMap.put(6L, new IngredientPackage(6L, "Can", ingredientItemMap.get(6L), 1.5));
