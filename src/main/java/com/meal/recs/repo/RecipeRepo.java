@@ -51,7 +51,7 @@ public class RecipeRepo {
     ingredientPackageMap.put(8L, new IngredientPackage(8L, "Head", ingredientItemMap.get(8L), 6D));
     ingredientPackageMap.put(9L, new IngredientPackage(9L, "Carton", ingredientItemMap.get(9L), 12D));
     ingredientPackageMap.put(10L, new IngredientPackage(10L, "Bag", ingredientItemMap.get(10L), 8D));
-    ingredientPackageMap.put(11L, new IngredientPackage(11L, "Lbs", ingredientItemMap.get(11L), 6D));
+    ingredientPackageMap.put(11L, new IngredientPackage(11L, "Lb", ingredientItemMap.get(11L), 6D));
     ingredientPackageMap.put(12L, new IngredientPackage(12L, "Carton", ingredientItemMap.get(12L), 4D));
 
     Recipe recipe = new Recipe(1L, "Baked Ziti", "recipe-1.png");

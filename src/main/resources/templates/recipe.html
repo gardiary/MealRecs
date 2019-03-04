@@ -7,10 +7,14 @@
 <body>
 
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" th:fragment="recsnav">
-    <a class="navbar-brand" href="/"><strong class="text-light">MealRecs</strong></a>
+    <div class="navbar-header">
+        <a class="navbar-brand" href="/"><strong class="text-light">MealRecs</strong></a>
+    </div>
+    <div class="collapse navbar-collapse justify-content-md-center">
+        &nbsp;
+    </div>
+    <th:block th:include="home :: myrecipelistnav"></th:block>
 </nav>
-
-
 
 <main role="main" class="container">
     <div th:if="${message != null}" class="alert alert-info alert-dismissible fade show" role="alert">
@@ -90,9 +94,9 @@
                     <div class="col-md-6" style="padding-left: 4px; padding-right: 4px;">
                         <button type="button" id="addRecipeBtn" class="btn text-light btn-mr-1">Add to my recipe list</button>
                     </div>
-                    <div class="col-md-6" style="">
+                    <!--div class="col-md-6" style="">
                         <a th:href="@{/recipe/list}" class="a-recipe-list">My Recipe List</a>
-                    </div>
+                    </div-->
                 </div>
             </div>
         </div>

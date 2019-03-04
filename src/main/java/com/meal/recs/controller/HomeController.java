@@ -84,7 +84,7 @@ public class HomeController {
         Recipe recipe = RecipeRepo.getRecipe(id);
 
         if(selectedIngredients != null && selectedIngredients.size() > 0) {
-            manageIngredients(recipe, selectedIngredients);
+            manageIngredients(recipe, selectedIngredients, recipeList);
         } else {    // uncheck all ingredients
             recipe.resetIngredientsState(false);
         }
@@ -111,8 +111,8 @@ public class HomeController {
                             @RequestParam(value = "crossCheck", required = false) String crossCheck,
                             @ModelAttribute("recipeList") RecipeList recipeList) {
         Recipe recipe = RecipeRepo.getRecipe(id);
-
-        if(crossCheck != null && crossCheck.equals("1")) {
+        recipe.resetIngredientsState();
+        /*if(crossCheck != null && crossCheck.equals("1")) {
             Map<Long, Ingredient> totalIngredients = recipeList.getTotalIngredients();
 
             if(totalIngredients.size() > 0) {
@@ -140,7 +140,7 @@ public class HomeController {
                 Ingredient ingredient = entry.getValue();
                 ingredient.setSelected(true);
             }
-        }
+        }*/
 
         recipeList.addRecipe(recipe);
 
@@ -262,7 +262,7 @@ public class HomeController {
         return "redirect:/recipe/list";
     }
 
-    private void manageIngredients(Recipe recipe, List<Long> selectedIngredients) {
+    private void manageIngredients(Recipe recipe, List<Long> selectedIngredients, RecipeList recipeList) {
         for(Long key : recipe.getIngredients().keySet()) {
             Ingredient ingredient = recipe.getIngredients().get(key);
             boolean selected = false;
@@ -271,6 +271,25 @@ public class HomeController {
                 if(ingredient.getItem().getId().equals(selectedIngredient)) {
                     selected = true;
                     break;
+                }
+            }
+
+            // cross check, available ingredients should be checked
+            if(!selected) {
+                Map<Long, Ingredient> totalIngredients = recipeList.getTotalIngredients();
+
+                if (totalIngredients.size() > 0) {
+                    Ingredient checkIngredient = totalIngredients.get(ingredient.getItem().getId());
+
+                    if (checkIngredient != null) {
+                        IngredientPackage ingredientPackage = RecipeRepo.getIngredientPackage(checkIngredient.getItem().getId());
+                        Double total = checkIngredient.getPackageCount() * ingredientPackage.getItemPackage();
+                        Double remaining = total - checkIngredient.getAmount();
+
+                        if (ingredient.getAmount() <= remaining) {
+                            selected = true;
+                        }
+                    }
                 }
             }
 
