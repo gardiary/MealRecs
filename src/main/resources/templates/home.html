@@ -13,9 +13,7 @@
         </button>
     </div>
     <div class="collapse navbar-collapse justify-content-md-center" id="navbarCollapsed">
-        <span class="navbar-text text-light">
-          <strong>Step 1: Choose Your 1st Recipe</strong>
-        </span>
+        &nbsp;
     </div>
     <div class="form-inline" th:fragment="myrecipelistnav">
         <ul class="navbar-nav">
@@ -25,15 +23,69 @@
 </nav>
 
 <main role="main" class="container">
-    <div>
-        <div class="row" style="margin-bottom: 10px" th:each="oneRowRecipes : ${recipes}">
-            <div class="col-md-4" th:each="recipe : ${oneRowRecipes}">
-                <a th:href="@{/recipe/{id}(id=${recipe.id})}">
-                    <div class="recipe-prev-box border">
-                        <div class="recipe-prev-img-box"><img th:src="@{/images/{pic}(pic=${recipe.picture})}" /></div>
-                        <div class="recipe-prev-text"><a th:href="@{/recipe/{id}(id=${recipe.id})}" th:text="${recipe.name}"></a></div>
+    <div style="text-align:center;">
+        <div style="margin-top: 16px">
+            <div>
+                <h4 class="info-header">Recipes To Avoid Leftovers</h4>
+            </div>
+            <div style="margin-top: 16px">
+                <a role="button" th:href="@{/recipes}" class="btn text-light btn-mr-1 btn-mr-big" >GET STARTED</a>
+            </div>
+        </div>
+
+        <div style="margin-top: 80px">
+            <div>
+                <h4 class="info-header">How it Works</h4>
+            </div>
+            <div class="row display-center" style="width:80%;">
+                <div class="col-md-3 info-content">
+                    <div class="number-box">
+                        <span>1</span>
                     </div>
-                </a>
+                    <div>
+                        <span>Find a Recipe</span>
+                    </div>
+                </div>
+                <div class="col-md-3 info-content">
+                    <div class="number-box">
+                        <span>2</span>
+                    </div>
+                    <div>
+                        <span>Add Ingredients to My Recipe List</span>
+                    </div>
+                </div>
+                <div class="col-md-3 info-content">
+                    <div class="number-box">
+                        <span>3</span>
+                    </div>
+                    <div>
+                        <span>Choose Recipes that will use Remaining Ingredients</span>
+                    </div>
+                </div>
+                <div class="col-md-3 info-content">
+                    <div class="number-box">
+                        <span>4</span>
+                    </div>
+                    <div>
+                        <span>Get ingredients delivered to your door!</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top: 80px">
+            <div>
+                <h4 class="info-header">Why MealRecs?</h4>
+            </div>
+            <div class="row display-center" style="width:60%;">
+                <div class="col-md-4">
+                    <span class="info-content">Waste Less Food</span>
+                </div>
+                <div class="col-md-4">
+                    <span class="info-content">Save Money</span>
+                </div>
+                <div class="col-md-4">
+                    <span class="info-content">Easily Find New Recipes</span>
+                </div>
             </div>
         </div>
     </div>

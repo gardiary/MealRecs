@@ -17,6 +17,11 @@ a:hover {
     text-decoration: none;
 }
 
+.display-center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .a-recipe-list {
     color: #404040;
 }
@@ -45,8 +50,31 @@ a:hover {
     border-radius: 0;
 }
 
+.btn-mr-big {
+    padding: 16px 26px;
+    font-weight: bold;
+}
+
 .btn-close-hidden {
     display: none;
+}
+
+.info-header {
+    color: #6d777e;
+    font-family: Bahnschrift, sans-serif, Arial;
+    font-size: 24pt;
+}
+
+.info-content {
+    color: #6d777e;
+    font-family: Bahnschrift, sans-serif, Arial;
+    font-size: 1.1em;
+}
+
+.info-content .number-box {
+    display: inline-block;
+    font-size: 20pt;
+    font-weight: bold;
 }
 
 .recipe-prev-box {

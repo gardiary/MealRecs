@@ -37,6 +37,13 @@ public class HomeController {
         return "home";
     }
 
+    @GetMapping("/recipes")
+    public String recipes(Model model){
+        model.addAttribute("recipes", RecipeRepo.getMultiLinesRecipes(3));
+
+        return "recipes";
+    }
+
     @RequestMapping(path = "/recipe/{id}", method = RequestMethod.GET)
     public String recipe(@PathVariable("id") Long id, Model model,
                          @RequestParam(value = "crossCheck", required = false) String crossCheck,
@@ -103,7 +110,7 @@ public class HomeController {
         model.addAttribute("recommendationRecipes", RecipeRepo.getRecommendationRecipes(id));
         model.addAttribute("recipeList", recipeList);
 
-        return "recipe";
+        return "redirect:/recipe/list";
     }
 
     @RequestMapping(path = "/recipe/{id}/add", method = RequestMethod.GET)
@@ -248,7 +255,7 @@ public class HomeController {
 
         model.addAttribute("recommendationRecipes", recommendationRecipes);
 
-        return "recipeList";
+        return "recipe_list";
     }
 
     @RequestMapping(path = "/recipe/list/remove", method = RequestMethod.GET)
