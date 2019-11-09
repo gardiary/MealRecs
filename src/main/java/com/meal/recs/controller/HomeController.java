@@ -152,7 +152,7 @@ public class HomeController {
     }
 
     @RequestMapping(path = "/recipe/list", method = RequestMethod.GET)
-    @CrossOrigin(origins = "https://mealrecs.herokuapp.com")
+    @CrossOrigin(origins = "*")
     public String recipeList(Model model, @ModelAttribute("recipeList") RecipeList recipeList) {
         model.addAttribute("recipeList", recipeList);
 

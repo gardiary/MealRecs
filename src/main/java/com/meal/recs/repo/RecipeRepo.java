@@ -1,9 +1,6 @@
 package com.meal.recs.repo;
 
-import com.meal.recs.model.Ingredient;
-import com.meal.recs.model.IngredientItem;
-import com.meal.recs.model.IngredientPackage;
-import com.meal.recs.model.Recipe;
+import com.meal.recs.model.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,6 +52,10 @@ public class RecipeRepo {
     ingredientPackageMap.put(12L, new IngredientPackage(12L, "Carton", ingredientItemMap.get(12L), 4D));
 
     Recipe recipe = new Recipe(1L, "Baked Ziti", "recipe-1.png");
+    recipe.setDescription("Baked Ziti - classic Italian American comfort food of pasta baked with ground beef, tomato sauce and all kinds of gooey, yummy cheeses. So EASY and so good!");
+    recipe.setPrepTime(new Time(20, TimeUnit.MINUTE));
+    recipe.setCookTime(new Time(35, TimeUnit.MINUTE));
+    recipe.setServings(10);
     recipe.addIngredient(new Ingredient(ingredientItemMap.get(1L), 1D));
     recipe.addIngredient(new Ingredient(ingredientItemMap.get(2L), 1.5));
     recipe.addIngredient(new Ingredient(ingredientItemMap.get(3L), 1.25));
@@ -69,6 +70,10 @@ public class RecipeRepo {
     recommendationRecipes.put(recipe.getId(), Arrays.asList(2L, 4L, 6L));
 
     recipe = new Recipe(2L, "Meatballs", "recipe-2.png");
+    recipe.setDescription("Tender, juicy meatballs loaded with flavor and simmered in a homemade marinara sauce. Perfect for topping spaghetti noodles, or just enjoying as an appetizer.");
+    recipe.setPrepTime(new Time(30, TimeUnit.MINUTE));
+    recipe.setCookTime(new Time(20, TimeUnit.MINUTE));
+    recipe.setServings(4);
     recipe.addIngredient(new Ingredient(ingredientItemMap.get(3L), 0.75));
     recipe.addIngredient(new Ingredient(ingredientItemMap.get(2L), 0.5));
     recipe.addIngredient(new Ingredient(ingredientItemMap.get(4L), 7D));
@@ -82,6 +87,10 @@ public class RecipeRepo {
     recommendationRecipes.put(recipe.getId(), Arrays.asList(3L, 5L, 1L));
 
     recipe = new Recipe(3L, "Tacos", "recipe-3.png");
+    recipe.setDescription("Classic, delicious, and a million times better than fast-food tacos, ... An easy 20-minute meal even the pickiest of eaters will enjoy this taco recipe!");
+    recipe.setPrepTime(new Time(5, TimeUnit.MINUTE));
+    recipe.setCookTime(new Time(15, TimeUnit.MINUTE));
+    recipe.setServings(4);
     recipe.addIngredient(new Ingredient(ingredientItemMap.get(3L), 1.25));
     recipe.addIngredient(new Ingredient(ingredientItemMap.get(2L), 1.5));
     recipe.addIngredient(new Ingredient(ingredientItemMap.get(7L), 2D));
@@ -96,6 +105,10 @@ public class RecipeRepo {
     recommendationRecipes.put(recipe.getId(), Arrays.asList(6L, 2L, 5L));
 
     recipe = new Recipe(4L, "Chicken Parm", "recipe-4.png");
+    recipe.setDescription("A delicious Italian breaded chicken smothered with cheese and tomato-based pasta sauce!");
+    recipe.setPrepTime(new Time(25, TimeUnit.MINUTE));
+    recipe.setCookTime(new Time(20, TimeUnit.MINUTE));
+    recipe.setServings(6);
     recipe.addIngredient(new Ingredient(ingredientItemMap.get(11L), 6D));
     recipe.addIngredient(new Ingredient(ingredientItemMap.get(6L), 2D));
     recipe.addIngredient(new Ingredient(ingredientItemMap.get(4L), 7D));
@@ -111,6 +124,10 @@ public class RecipeRepo {
     recommendationRecipes.put(recipe.getId(), Arrays.asList(2L, 6L, 3L));
 
     recipe = new Recipe(5L, "Chicken Enchilada", "recipe-5.png");
+    recipe.setDescription("A classic Mexican staple for mushroom lovers.");
+    recipe.setPrepTime(new Time(30, TimeUnit.MINUTE));
+    recipe.setCookTime(new Time(30, TimeUnit.MINUTE));
+    recipe.setServings(5);
     recipe.addIngredient(new Ingredient(ingredientItemMap.get(11L), 5D));
     recipe.addIngredient(new Ingredient(ingredientItemMap.get(9L), 4D));
     recipe.addIngredient(new Ingredient(ingredientItemMap.get(10L), 8D));
@@ -124,6 +141,10 @@ public class RecipeRepo {
     recommendationRecipes.put(recipe.getId(), Arrays.asList(3L, 4L, 1L));
 
     recipe = new Recipe(6L, "Chicken Marsala", "recipe-6.png");
+    recipe.setDescription("Chicken Marsala in a deliciously creamy mushroom sauce rivals any restaurant!");
+    recipe.setPrepTime(new Time(10, TimeUnit.MINUTE));
+    recipe.setCookTime(new Time(20, TimeUnit.MINUTE));
+    recipe.setServings(7);
     recipe.addIngredient(new Ingredient(ingredientItemMap.get(11L), 7D));
     recipe.addIngredient(new Ingredient(ingredientItemMap.get(9L), 4D));
     recipe.addIngredient(new Ingredient(ingredientItemMap.get(5L), 4D));

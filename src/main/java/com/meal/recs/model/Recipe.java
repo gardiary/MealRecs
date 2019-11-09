@@ -13,6 +13,10 @@ public class Recipe {
   private String name;
   private String picture;
   private String recommendationMessage;
+  private String description;
+  private Time prepTime;
+  private Time cookTime;
+  private Integer servings;
   private Map<Long, Ingredient> ingredients = new HashMap<>();
   private List<String> directions;
   private List<Ingredient> neededIngredients = new ArrayList<>();
@@ -24,6 +28,16 @@ public class Recipe {
     this.id = id;
     this.name = name;
     this.picture = picture;
+  }
+
+  public Recipe(Long id, String name, String picture, String description, Time prepTime, Time cookTime, Integer servings) {
+    this.id = id;
+    this.name = name;
+    this.picture = picture;
+    this.description = description;
+    this.prepTime = prepTime;
+    this.cookTime = cookTime;
+    this.servings = servings;
   }
 
   public Long getId() {
@@ -56,6 +70,38 @@ public class Recipe {
 
   public void setRecommendationMessage(String recommendationMessage) {
     this.recommendationMessage = recommendationMessage;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public Time getPrepTime() {
+    return prepTime;
+  }
+
+  public void setPrepTime(Time prepTime) {
+    this.prepTime = prepTime;
+  }
+
+  public Time getCookTime() {
+    return cookTime;
+  }
+
+  public void setCookTime(Time cookTime) {
+    this.cookTime = cookTime;
+  }
+
+  public Integer getServings() {
+    return servings;
+  }
+
+  public void setServings(Integer servings) {
+    this.servings = servings;
   }
 
   public Map<Long, Ingredient> getIngredients() {

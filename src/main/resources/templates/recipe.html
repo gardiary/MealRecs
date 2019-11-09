@@ -31,11 +31,25 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="row">
-                    <div class="col-md-4"><h3 itemprop="name" th:text="${recipe.name}"></h3>
-                        <span itemprop="description" th:text="${recipe.name}" style="display:none;"></span></div>
+                    <div class="col-md-4"><h3 itemprop="name" th:text="${recipe.name}"></h3></div>
                     <div class="col-md-8">
-                        <div class="recipe-img-box border" style="padding: 4px">
-                            <img itemprop="image" th:src="@{/images/{pic}(pic=${recipe.picture})}" />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="recipe-img-box border" style="padding: 4px">
+                                    <img itemprop="image" th:src="@{/images/{pic}(pic=${recipe.picture})}" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <span itemprop="prepTime" th:attr="content=${recipe.prepTime.timeAsRecipeSchemaContent}" th:utext="${'Prep: <b>' + recipe.prepTime.value + '</b> ' + recipe.prepTime.timeUnit.label}" class="info-text"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <span itemprop="cookTime" th:attr="content=${recipe.cookTime.timeAsRecipeSchemaContent}" th:utext="${'Cook: <b>' + recipe.cookTime.value + '</b> ' + recipe.cookTime.timeUnit.label}" class="info-text"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <span itemprop="recipeYield" th:utext="${'<b>' + recipe.servings + '</b> Servings'}" class="info-text"></span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -97,6 +111,11 @@
                 <div class="row" style="margin-top: 8px;">
                     <div class="col-md-12" style="padding-left: 4px; padding-right: 4px;">
                         <button type="button" id="addRecipeBtn" class="btn text-light btn-mr-1">Add to My Recipe List</button>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 20px;">
+                    <div class="col-md-12" style="padding-left: 4px; padding-right: 4px;">
+                        <span itemprop="description" th:text="${recipe.description}"></span>
                     </div>
                 </div>
             </div>
