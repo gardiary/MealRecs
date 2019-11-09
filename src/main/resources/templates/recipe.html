@@ -31,10 +31,10 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="row">
-                    <div class="col-md-4"><h3 th:text="${recipe.name}"></h3></div>
+                    <div class="col-md-4"><h3 itemprop="name" th:text="${recipe.name}"></h3></div>
                     <div class="col-md-8">
                         <div class="recipe-img-box border" style="padding: 4px">
-                            <img th:src="@{/images/{pic}(pic=${recipe.picture})}" />
+                            <img itemprop="image" th:src="@{/images/{pic}(pic=${recipe.picture})}" />
                         </div>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                             <div class="col-md-3">
                                 <div class="checkbox checkbox-success">
                                     <input type="checkbox" name="ingredient" class="styled" th:id="'ingredient'+${ingredient.value.item.id}" th:value="${ingredient.value.item.id}" th:checked="${ingredient.value.selected}" />
-                                    <label th:for="'ingredient'+${ingredient.value.item.id}" th:text="${ingredient.value.amountAsString + ' ' + ingredient.value.item.unit}"></label>
+                                    <label itemprop="recipeIngredient" th:for="'ingredient'+${ingredient.value.item.id}" th:text="${ingredient.value.amountAsString + ' ' + ingredient.value.item.unit}"></label>
                                 </div>
                             </div>
                             <div class="col-md-6" style="padding-left: 6px;"><label th:for="'ingredient'+${ingredient.value.item.id}" th:text="${ingredient.value.item.name}"></label></div>
