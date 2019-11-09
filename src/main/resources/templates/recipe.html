@@ -31,7 +31,8 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="row">
-                    <div class="col-md-4"><h3 itemprop="name" th:text="${recipe.name}"></h3></div>
+                    <div class="col-md-4"><h3 itemprop="name" th:text="${recipe.name}"></h3>
+                        <span itemprop="description" th:text="${recipe.name}" style="display:none;"></span></div>
                     <div class="col-md-8">
                         <div class="recipe-img-box border" style="padding: 4px">
                             <img itemprop="image" th:src="@{/images/{pic}(pic=${recipe.picture})}" />
@@ -51,7 +52,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6" style="padding-left: 6px;"><label th:for="'ingredient'+${ingredient.value.item.id}" th:text="${ingredient.value.item.name}"></label></div>
-                            <input type="hidden" itemprop="recipeIngredient" th:value="${ingredient.value.amountAsString + ' ' + ingredient.value.item.unit + ' ' + ingredient.value.item.name}" />
+                            <span itemprop="recipeIngredient" th:text="${ingredient.value.amountAsString + ' ' + ingredient.value.item.unit + ' ' + ingredient.value.item.name}" style="display:none;"></span>
                         </div>
                         <div class="row">
                             <div class="col-md-12"><span style="font-size:9pt;">* Checked ingredients will appear on My Recipe List when added</span></div>
@@ -64,9 +65,9 @@
                             <div class="col-md-12"><h4>Directions</h4></div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12" itemprop="recipeInstructions">
+                            <div class="col-md-12">
                                 <ol>
-                                    <li th:each="direction : ${recipe.directions}" th:text="${direction}"></li>
+                                    <li itemprop="recipeInstructions" th:each="direction : ${recipe.directions}" th:text="${direction}"></li>
                                 </ol>
                             </div>
                         </div>
