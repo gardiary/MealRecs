@@ -5,15 +5,10 @@ import com.meal.recs.model.IngredientPackage;
 import com.meal.recs.model.Recipe;
 import com.meal.recs.model.RecipeList;
 import com.meal.recs.repo.RecipeRepo;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -24,6 +19,8 @@ import java.util.stream.Collectors;
 @Controller
 @SessionAttributes("recipeList")
 public class HomeController {
+    @Value("${server.base.host}")
+    private String BASE_HOST = "";
 
     @ModelAttribute("recipeList")
     public RecipeList recipeList() {
@@ -203,16 +200,12 @@ public class HomeController {
             for (Recipe recipe : recommendationRecipes) {
                 Map<Long, Ingredient> ingredients = recipe.getIngredients();
 
-                //System.out.println("[" + recipe.getName() + "]");
-                //System.out.println("Ingredients:");
-
                 List<Ingredient> neededIngredients = new ArrayList<>();
 
                 for(Map.Entry<Long, Ingredient> entry : ingredients.entrySet()) {
                     Ingredient ingre = entry.getValue();
 
                     Ingredient checkIngredient = totalIngredients.get(ingre.getItem().getId());
-                    //Boolean ingredientAvailable = false;
 
                     if(checkIngredient != null) {
                         IngredientPackage ingredientPackage = RecipeRepo.getIngredientPackage(checkIngredient.getItem().getId());
@@ -254,6 +247,7 @@ public class HomeController {
         }
 
         model.addAttribute("recommendationRecipes", recommendationRecipes);
+        model.addAttribute("baseHost", BASE_HOST);
 
         return "recipe_list";
     }
