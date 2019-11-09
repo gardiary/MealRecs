@@ -47,10 +47,11 @@
                             <div class="col-md-3">
                                 <div class="checkbox checkbox-success">
                                     <input type="checkbox" name="ingredient" class="styled" th:id="'ingredient'+${ingredient.value.item.id}" th:value="${ingredient.value.item.id}" th:checked="${ingredient.value.selected}" />
-                                    <label itemprop="recipeIngredient" th:for="'ingredient'+${ingredient.value.item.id}" th:text="${ingredient.value.amountAsString + ' ' + ingredient.value.item.unit}"></label>
+                                    <label th:for="'ingredient'+${ingredient.value.item.id}" th:text="${ingredient.value.amountAsString + ' ' + ingredient.value.item.unit}"></label>
                                 </div>
                             </div>
                             <div class="col-md-6" style="padding-left: 6px;"><label th:for="'ingredient'+${ingredient.value.item.id}" th:text="${ingredient.value.item.name}"></label></div>
+                            <input type="hidden" itemprop="recipeIngredient" th:value="${ingredient.value.amountAsString + ' ' + ingredient.value.item.unit + ' ' + ingredient.value.item.name}" />
                         </div>
                         <div class="row">
                             <div class="col-md-12"><span style="font-size:9pt;">* Checked ingredients will appear on My Recipe List when added</span></div>
@@ -63,7 +64,7 @@
                             <div class="col-md-12"><h4>Directions</h4></div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-12" itemprop="recipeInstructions">
                                 <ol>
                                     <li th:each="direction : ${recipe.directions}" th:text="${direction}"></li>
                                 </ol>
