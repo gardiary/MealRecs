@@ -3,11 +3,8 @@
 <head lang="en" th:fragment="head">
     <title>MealRecs :: Recipe List</title>
     <!--/*/ <th:block th:include="fragments/general :: head"></th:block> /*/-->
-    <script async="true"
-            src="https://cdn.whisk.com/sdk/shopping-list.js"
-            type="text/javascript">
-    </script>
-    <script>
+    <script async="true" src="https://cdn.whisk.com/sdk/shopping-list.js" type="text/javascript" th:if="not ${recipeList.recipeMap.isEmpty()}"></script>
+    <script th:if="not ${recipeList.recipeMap.isEmpty()}">
       var whisk = whisk || {};
       whisk.queue = whisk.queue || [];
     </script>
@@ -71,7 +68,17 @@
                 </div>
             </div>
             <div class="col-md-4" style="padding-left: 40px;">
-                <button type="button" id="whisk-basket" class="btn text-light btn-mr-1">Buy Ingredients</button>
+                <button type="button" id="whisk-shop-products" class="btn text-light btn-mr-1">Buy Ingredients</button>
+                <script th:if="not ${recipeList.recipeMap.isEmpty()}" th:inline="javascript">
+                  whisk.queue.push(function() {
+                    whisk.listeners.addClickListener(
+                      'whisk-shop-products',
+                      'shoppingList.addProductsToBasket', {
+                        products: [[${recipeList.totalIngredientsNameOnly}]]
+                      }
+                    );
+                  });
+                </script>
             </div>
         </div>
 
@@ -113,13 +120,6 @@
     $(function () {
         $('[data-toggle="popover"]').popover({ trigger: "hover" });
     })
-</script>
-<script>
-  whisk.queue.push(function() {
-    whisk.listeners.addClickListener('whisk-basket', 'shoppingList.addRecipeToBasket', {
-      recipeUrl: '[[${baseHost}]]/recipe/list'
-    });
-  });
 </script>
 
 </body>

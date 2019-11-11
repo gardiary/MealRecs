@@ -2,7 +2,9 @@ package com.meal.recs.model;
 
 import com.meal.recs.repo.RecipeRepo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -70,6 +72,42 @@ public class RecipeList {
     }
 
     return ingredientTotals;
+  }
+
+  public String getTotalIngredientsAsJsArray() {
+    Map<Long, Ingredient> totalIngredients = getTotalIngredients();
+
+    StringBuilder sb = new StringBuilder("[");
+    if(totalIngredients != null && !totalIngredients.isEmpty()) {
+      int count = 0;
+      for(Map.Entry<Long, Ingredient> entry : totalIngredients.entrySet()) {
+        count += 1;
+        Ingredient ingredient = entry.getValue();
+        sb.append("\'").append(ingredient.getItem().getName()).append("\'");
+
+        if(count < totalIngredients.size()) {
+          sb.append(", ");
+        }
+      }
+    }
+    sb.append("]");
+
+    return sb.toString();
+  }
+
+  public List<String> getTotalIngredientsNameOnly() {
+    Map<Long, Ingredient> totalIngredients = getTotalIngredients();
+    List<String> ingredients = new ArrayList<>();
+
+    if(totalIngredients != null && !totalIngredients.isEmpty()) {
+      for(Map.Entry<Long, Ingredient> entry : totalIngredients.entrySet()) {
+        Ingredient ingredient = entry.getValue();
+        ingredients.add(ingredient.getItem().getName());
+
+      }
+    }
+
+    return ingredients;
   }
 
   private String determineUnit(IngredientPackage ingredientPackage, int packageCount) {
