@@ -109,6 +109,19 @@ public class RecipeList {
 
     return ingredients;
   }
+    public List<ShopItem> getTotalIngredientsShopItem() {
+        Map<Long, Ingredient> totalIngredients = getTotalIngredients();
+        List<ShopItem> ingredients = new ArrayList<>();
+
+        if(totalIngredients != null && !totalIngredients.isEmpty()) {
+            for(Map.Entry<Long, Ingredient> entry : totalIngredients.entrySet()) {
+                Ingredient ingredient = entry.getValue();
+                ingredients.add(new ShopItem(ingredient.getItem().getName(), ingredient.getPackageCount()));
+            }
+        }
+
+        return ingredients;
+    }
 
   private String determineUnit(IngredientPackage ingredientPackage, int packageCount) {
     if(!ingredientPackage.getUnit().equals("")) {
