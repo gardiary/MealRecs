@@ -22,7 +22,7 @@ public class RecipeList {
   }
 
   public void addRecipe(Recipe recipe) {
-    if(recipeMap == null) {
+    if (recipeMap == null) {
       recipeMap = new HashMap<>();
     }
 
@@ -33,10 +33,10 @@ public class RecipeList {
     recipeMap.remove(recipeId);
   }
 
-  public  Map<Long, Ingredient> getTotalIngredients() {
+  public Map<Long, Ingredient> getTotalIngredients() {
     Map<Long, Ingredient> ingredientTotals = new HashMap<>();
 
-    if(recipeMap.size() > 0) {
+    if (recipeMap.size() > 0) {
       for (Map.Entry<Long, Recipe> entry : recipeMap.entrySet()) {
         Recipe recipe = entry.getValue();
 
@@ -67,7 +67,7 @@ public class RecipeList {
 
         ingredient.setPackageCount(packageCount.intValue());
         ingredient.setPackageCountText(packageCount.intValue() + " " +
-                determineUnit(ingredientPackage, packageCount.intValue()) + ingredientPackage.getItem().getName());
+            determineUnit(ingredientPackage, packageCount.intValue()) + ingredientPackage.getItem().getName());
       }
     }
 
@@ -78,14 +78,14 @@ public class RecipeList {
     Map<Long, Ingredient> totalIngredients = getTotalIngredients();
 
     StringBuilder sb = new StringBuilder("[");
-    if(totalIngredients != null && !totalIngredients.isEmpty()) {
+    if (totalIngredients != null && !totalIngredients.isEmpty()) {
       int count = 0;
-      for(Map.Entry<Long, Ingredient> entry : totalIngredients.entrySet()) {
+      for (Map.Entry<Long, Ingredient> entry : totalIngredients.entrySet()) {
         count += 1;
         Ingredient ingredient = entry.getValue();
         sb.append("\'").append(ingredient.getItem().getName()).append("\'");
 
-        if(count < totalIngredients.size()) {
+        if (count < totalIngredients.size()) {
           sb.append(", ");
         }
       }
@@ -99,34 +99,48 @@ public class RecipeList {
     Map<Long, Ingredient> totalIngredients = getTotalIngredients();
     List<String> ingredients = new ArrayList<>();
 
-    if(totalIngredients != null && !totalIngredients.isEmpty()) {
-      for(Map.Entry<Long, Ingredient> entry : totalIngredients.entrySet()) {
+    if (totalIngredients != null && !totalIngredients.isEmpty()) {
+      for (Map.Entry<Long, Ingredient> entry : totalIngredients.entrySet()) {
         Ingredient ingredient = entry.getValue();
         ingredients.add(ingredient.getItem().getName());
-
       }
     }
 
     return ingredients;
   }
-    public List<ShopItem> getTotalIngredientsShopItem() {
-        Map<Long, Ingredient> totalIngredients = getTotalIngredients();
-        List<ShopItem> ingredients = new ArrayList<>();
 
-        if(totalIngredients != null && !totalIngredients.isEmpty()) {
-            for(Map.Entry<Long, Ingredient> entry : totalIngredients.entrySet()) {
-                Ingredient ingredient = entry.getValue();
-                ingredients.add(new ShopItem(ingredient.getItem().getName(), ingredient.getPackageCount()));
-            }
-        }
+  public List<String> getTotalIngredientsPackageCount() {
+    Map<Long, Ingredient> totalIngredients = getTotalIngredients();
+    List<String> ingredients = new ArrayList<>();
 
-        return ingredients;
+    if (totalIngredients != null && !totalIngredients.isEmpty()) {
+      for (Map.Entry<Long, Ingredient> entry : totalIngredients.entrySet()) {
+        Ingredient ingredient = entry.getValue();
+        ingredients.add(ingredient.getPackageCountText());
+      }
     }
 
+    return ingredients;
+  }
+
+  public List<ShopItem> getTotalIngredientsShopItem() {
+    Map<Long, Ingredient> totalIngredients = getTotalIngredients();
+    List<ShopItem> ingredients = new ArrayList<>();
+
+    if (totalIngredients != null && !totalIngredients.isEmpty()) {
+      for (Map.Entry<Long, Ingredient> entry : totalIngredients.entrySet()) {
+        Ingredient ingredient = entry.getValue();
+        ingredients.add(new ShopItem(ingredient.getItem().getName(), ingredient.getPackageCount()));
+      }
+    }
+
+    return ingredients;
+  }
+
   private String determineUnit(IngredientPackage ingredientPackage, int packageCount) {
-    if(!ingredientPackage.getUnit().equals("")) {
-      if(packageCount > 1) {
-        if(ingredientPackage.getUnit().equalsIgnoreCase("Box")) {
+    if (!ingredientPackage.getUnit().equals("")) {
+      if (packageCount > 1) {
+        if (ingredientPackage.getUnit().equalsIgnoreCase("Box")) {
           return ingredientPackage.getUnit() + "es of ";
         } else {
           return ingredientPackage.getUnit() + "s of ";
