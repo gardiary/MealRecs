@@ -67,7 +67,9 @@ public class RecipeList {
 
         ingredient.setPackageCount(packageCount.intValue());
         ingredient.setPackageCountText(packageCount.intValue() + " " +
-            determineUnit(ingredientPackage, packageCount.intValue()) + ingredientPackage.getItem().getName());
+            determineUnit(ingredientPackage, packageCount.intValue(), true) + ingredientPackage.getItem().getName());
+        ingredient.setPackageCountText2(packageCount.intValue() + " " +
+            determineUnit(ingredientPackage, packageCount.intValue(), false) + ingredientPackage.getItem().getName());
       }
     }
 
@@ -116,7 +118,7 @@ public class RecipeList {
     if (totalIngredients != null && !totalIngredients.isEmpty()) {
       for (Map.Entry<Long, Ingredient> entry : totalIngredients.entrySet()) {
         Ingredient ingredient = entry.getValue();
-        ingredients.add(ingredient.getPackageCountText());
+        ingredients.add(ingredient.getPackageCountText2());
       }
     }
 
@@ -137,16 +139,16 @@ public class RecipeList {
     return ingredients;
   }
 
-  private String determineUnit(IngredientPackage ingredientPackage, int packageCount) {
+  private String determineUnit(IngredientPackage ingredientPackage, int packageCount, boolean withOf) {
     if (!ingredientPackage.getUnit().equals("")) {
       if (packageCount > 1) {
         if (ingredientPackage.getUnit().equalsIgnoreCase("Box")) {
-          return ingredientPackage.getUnit() + "es of ";
+          return ingredientPackage.getUnit() + (withOf ? "es of " : "es ");
         } else {
-          return ingredientPackage.getUnit() + "s of ";
+          return ingredientPackage.getUnit() + (withOf ? "s of " : "s ");
         }
       } else {
-        return ingredientPackage.getUnit() + " of ";
+        return ingredientPackage.getUnit() + (withOf ? " of " : " ");
       }
     } else {
       return "";

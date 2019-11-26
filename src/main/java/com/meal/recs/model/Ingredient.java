@@ -10,6 +10,7 @@ public class Ingredient {
   private Double amount;
   private int packageCount;
   private String packageCountText;
+  private String packageCountText2;
   private boolean selected = true;
 
   public Ingredient() {
@@ -56,6 +57,14 @@ public class Ingredient {
 
   public void setPackageCountText(String packageCountText) {
     this.packageCountText = packageCountText;
+  }
+
+  public String getPackageCountText2() {
+    return packageCountText2;
+  }
+
+  public void setPackageCountText2(String packageCountText2) {
+    this.packageCountText2 = packageCountText2;
   }
 
   public boolean isSelected() {
