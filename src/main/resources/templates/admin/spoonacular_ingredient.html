@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en" th:fragment="head">
+    <title>MealRecs :: Import Ingredient</title>
+    <!--/*/ <th:block th:include="fragments/general :: head"></th:block> /*/-->
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" th:fragment="homenav">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="/"><strong class="text-light">MealRecs</strong></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapsed" aria-controls="navbarCollapsed" aria-expanded="false">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+    <div class="collapse navbar-collapse justify-content-md-center" id="navbarCollapsed">
+        &nbsp;<span class="navbar-text text-light">
+            <strong>Ingredient</strong>
+        </span>
+    </div>
+    <div class="form-inline" th:fragment="myrecipelistnav">
+        <ul class="navbar-nav">
+            <li class="nav-item"><a th:href="@{/recipe/list}" class="text-light" style="font-size:12pt">My Recipe List</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main role="main" class="container">
+    <div>
+        <div class="row mb-4">
+            <div class="col-md-6 col-lg-6">
+                <h4 class="info-header">Ingredient</h4>
+            </div>
+        </div>
+
+        <form th:object="${ingredient}" method="post">
+            <div class="row">
+                <div class="col-md-6 col-lg-6">
+                    <input type="hidden" th:field="*{id}">
+                    <input type="hidden" th:field="*{image}">
+                    <div class="form-group">
+                        <img class="img-fluid" id="image" th:src="${baseImageUrl + ingredient.image}">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" th:field="*{name}" placeholder="Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="unit">Unit</label>
+                        <select class="form-control" id="unit" name="unit">
+                            <!--/*
+                            <option value="" th:text="#{''}"></option>*/-->
+                            <option th:each="unit : ${ingredient.possibleUnits}" th:value="${unit}" th:text="${unit}"></option>
+                        </select>
+                    </div>
+                    <div>
+                        <a class="btn btn-success" role="button" th:href="@{/admin/ingredient/search}"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to search</a>
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+
+<th:block th:include="fragments/general :: jsscript"></th:block>
+
+</body>
+</html>

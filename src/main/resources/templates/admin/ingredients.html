@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en" th:fragment="head">
+    <title>MealRecs :: Ingredients</title>
+    <!--/*/ <th:block th:include="fragments/general :: head"></th:block> /*/-->
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" th:fragment="homenav">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="/"><strong class="text-light">MealRecs</strong></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapsed" aria-controls="navbarCollapsed" aria-expanded="false">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+    <div class="collapse navbar-collapse justify-content-md-center" id="navbarCollapsed">
+        &nbsp;<span class="navbar-text text-light">
+            <strong>Ingredients</strong>
+        </span>
+    </div>
+    <div class="form-inline" th:fragment="myrecipelistnav">
+        <ul class="navbar-nav">
+            <li class="nav-item"><a th:href="@{/recipe/list}" class="text-light" style="font-size:12pt">My Recipe List</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main role="main" class="container">
+    <div>
+        <div class="row mb-2">
+            <div class="col-md-8 col-lg-8">
+                <h4 class="info-header">Ingredients</h4>
+            </div>
+        </div>
+
+        <div class="" th:if="${ingredients != null && !ingredients.empty}">
+            <div class="row">
+                <div class="col-md-10 col-lg-10">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col" class="">#</th>
+                            <th scope="col" class="col-1">Image</th>
+                            <th scope="col" class="">Name</th>
+                            <th scope="col" class="">Unit</th>
+                            <th scope="col" class="">Source</th>
+                            <th scope="col" class="col-2">&nbsp;</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="ingredient, i : ${ingredients}">
+                            <td th:text="${((page - 1) * pageSize) + i.count}"></td>
+                            <td>
+                                <img class="img-fluid" th:src="${ingredient.image}">
+                            </td>
+                            <td th:text="${ingredient.name}"></td>
+                            <td th:text="${ingredient.unit}"></td>
+                            <td th:text="${ingredient.source}"></td>
+                            <td>
+                                <a class="btn btn-sm btn-primary" role="button" th:href="@{/admin/ingredient(id=${ingredient.id})}" title="View"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                <a class="btn btn-sm btn-danger" role="button" th:href="@{/admin/ingredient/delete(id=${ingredient.id})}" title="Delete"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-lg-10">
+                    <div class="pagination justify-content-center">
+                        <nav aria-label="Page Navigation">
+                            <th:block th:utext="${pageNav}" />
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-5">
+            <a class="btn btn-success" role="button" th:href="@{/admin/ingredient/search}"><i class="fa fa-search" aria-hidden="true"></i> Search for ingredients</a>
+        </div>
+    </div>
+</main>
+
+<th:block th:include="fragments/general :: jsscript"></th:block>
+
+</body>
+</html>

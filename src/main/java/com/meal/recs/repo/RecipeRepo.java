@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.meal.recs.model.IngredientUnit.*;
+
 /**
  * Created by gardiary on 25/01/19.
  */
@@ -24,7 +26,7 @@ public class RecipeRepo {
     recommendationRecipes = new HashMap<>();
 
     ingredientItemMap = new HashMap<>();
-    ingredientItemMap.put(1L, new IngredientItem(1L, "Pasta", "box"));
+    /*ingredientItemMap.put(1L, new IngredientItem(1L, "Pasta", "box"));
     ingredientItemMap.put(2L, new IngredientItem(2L, "Mozzarella", "cups"));
     ingredientItemMap.put(3L, new IngredientItem(3L, "Ground Beef", "lbs"));
     ingredientItemMap.put(4L, new IngredientItem(4L, "Red Sauce", "oz"));
@@ -35,7 +37,19 @@ public class RecipeRepo {
     ingredientItemMap.put(9L, new IngredientItem(9L, "Mushrooms", "oz sliced"));
     ingredientItemMap.put(10L, new IngredientItem(10L, "Tortillas", "pcs"));
     ingredientItemMap.put(11L, new IngredientItem(11L, "Chicken", "pcs"));
-    ingredientItemMap.put(12L, new IngredientItem(12L, "Chicken Broth", "cups"));
+    ingredientItemMap.put(12L, new IngredientItem(12L, "Chicken Broth", "cups"));*/
+    ingredientItemMap.put(1L, new IngredientItem(1L, "Pasta", BOX));
+    ingredientItemMap.put(2L, new IngredientItem(2L, "Mozzarella", CUP));
+    ingredientItemMap.put(3L, new IngredientItem(3L, "Ground Beef", LBS));
+    ingredientItemMap.put(4L, new IngredientItem(4L, "Red Sauce", OZ));
+    ingredientItemMap.put(5L, new IngredientItem(5L, "Olive Oil", TABLESPOON));
+    ingredientItemMap.put(6L, new IngredientItem(6L, "Bread Crumbs", CUP));
+    ingredientItemMap.put(7L, new IngredientItem(7L, "Tomatoes", PIECE));
+    ingredientItemMap.put(8L, new IngredientItem(8L, "Lettuce", CUP));
+    ingredientItemMap.put(9L, new IngredientItem(9L, "Mushrooms", OZ));
+    ingredientItemMap.put(10L, new IngredientItem(10L, "Tortillas", PIECE));
+    ingredientItemMap.put(11L, new IngredientItem(11L, "Chicken", PIECE));
+    ingredientItemMap.put(12L, new IngredientItem(12L, "Chicken Broth", CUP));
 
     ingredientPackageMap = new HashMap<>();
     ingredientPackageMap.put(1L, new IngredientPackage(1L, "Box", ingredientItemMap.get(1L), 1D));
