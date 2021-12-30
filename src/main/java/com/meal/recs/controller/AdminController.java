@@ -57,6 +57,11 @@ public class AdminController {
 
     @GetMapping("/ingredient/search")
     public String ingredientSearch(Model model, @RequestParam(required = false) String query) {
+        LOGGER.info("SPOONACULAR_API_KEY : {}", SPOONACULAR_API_KEY);
+        LOGGER.info("SPOONACULAR_BASE_INGREDIENT_IMAGE_URL : {}", SPOONACULAR_BASE_INGREDIENT_IMAGE_URL);
+        LOGGER.info("SPOONACULAR_API_SEARCH_INGREDIENT : {}", SPOONACULAR_API_SEARCH_INGREDIENT);
+        LOGGER.info("SPOONACULAR_API_GET_INGREDIENT : {}", SPOONACULAR_API_GET_INGREDIENT);
+
         if (ObjectUtils.isNotEmpty(query)) {
             Map<String, String> params = new HashMap<>();
             params.put(API_KEY, SPOONACULAR_API_KEY);
