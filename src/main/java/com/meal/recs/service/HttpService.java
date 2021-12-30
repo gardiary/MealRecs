@@ -27,7 +27,13 @@ public class HttpService {
 	}*/
 
 	public <T> T get(String url, Class<T> clazz, Map<String, String> params) {
-		return restTemplate.getForObject(url, clazz, params);
+		//return restTemplate.getForObject(url, clazz, params);
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("user-agent", "Application");
+		HttpEntity<String> entity = new HttpEntity<>(headers);
+
+		ResponseEntity<T> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity, clazz, params);
+		return responseEntity.getBody();
 	}
 
 	/*public WarehousesDto getWarehouse(String warehouseUuid) {
