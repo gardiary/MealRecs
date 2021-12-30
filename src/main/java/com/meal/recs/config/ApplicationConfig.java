@@ -17,7 +17,7 @@ import org.springframework.web.client.RestTemplate;
 public class ApplicationConfig {
     @Bean
     public RestTemplate getRestTemplate() {
-        var restTemplate = new RestTemplate();
+        RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         return restTemplate;
     }
