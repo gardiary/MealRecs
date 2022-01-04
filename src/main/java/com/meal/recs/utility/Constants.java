@@ -14,7 +14,10 @@ public class Constants {
     public static final String INGREDIENT = "ingredient";
     public static final String INGREDIENTS = "ingredients";
     public static final String QUERY = "query";
-    public static final String UNITS = "units";
+    public static final String RECIPE = "recipe";
+    public static final String RECIPES = "recipes";
     public static final String SOURCES = "sources";
+    public static final String UNIT = "unit";
+    public static final String UNITS = "units";
 
 }

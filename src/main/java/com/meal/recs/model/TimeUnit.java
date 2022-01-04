@@ -5,10 +5,10 @@ package com.meal.recs.model;
  * Date: 09/11/19, 14.59
  */
 public enum TimeUnit {
-    MINUTE("M", "min"), HOUR("H", "hour");
+    SECOND("S", "sec"), MINUTE("M", "min"), HOUR("H", "hour");
 
-    String code;
-    String label;
+    final String code;
+    final String label;
 
     TimeUnit(String code, String label) {
         this.code = code;

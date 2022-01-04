@@ -39,7 +39,7 @@
                             <div class="col-md-4" style="padding-left:4px;padding-right:4px;">
                                 <a th:href="@{/recipe/{id}(id=${recipeKeyValue.value.id})}">
                                     <div class="border recipe-list-img-box">
-                                        <img th:src="@{/images/{pic}(pic=${recipeKeyValue.value.picture})}" />
+                                        <img th:src="@{/images/{pic}(pic=${recipeKeyValue.value.image})}" />
                                     </div>
                                 </a>
                             </div>
@@ -101,7 +101,7 @@
                             <div class="col-md-12">
                                 <a th:href="@{/recipe/{id}(id=${recRecipe.id},crossCheck=1)}">
                                     <div class="recipe-rec-box border">
-                                        <div class="recipe-rec-img-box"><img th:src="@{/images/{pic}(pic=${recRecipe.picture})}" /></div>
+                                        <div class="recipe-rec-img-box"><img th:src="@{/images/{pic}(pic=${recRecipe.image})}" /></div>
                                         <div class="recipe-rec-text"><a th:href="@{/recipe/{id}(id=${recRecipe.id})}" th:text="${recRecipe.name}"></a></div>
                                     </div>
                                 </a>

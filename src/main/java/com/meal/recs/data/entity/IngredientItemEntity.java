@@ -18,7 +18,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="mr_ingredient_item")
 public class IngredientItemEntity extends BaseEntity {
-    @Column(name = "name", length = 100, nullable = false)
+    @Column(name = "name", length = 160, nullable = false)
     private String name;
 
     @Column(name = "unit", length = 20)

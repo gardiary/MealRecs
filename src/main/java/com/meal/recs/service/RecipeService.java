@@ -1,7 +1,7 @@
 package com.meal.recs.service;
 
-import com.meal.recs.data.entity.IngredientItemEntity;
-import com.meal.recs.data.repository.IngredientItemRepository;
+import com.meal.recs.data.entity.RecipeEntity;
+import com.meal.recs.data.repository.RecipeRepository;
 import com.meal.recs.model.IngredientUnit;
 import com.meal.recs.model.Source;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,42 +14,33 @@ import java.util.List;
 
 /**
  * User: gardiary
- * Date: 27/12/21, 15.46
+ * Date: 03/01/22, 10.27
  */
 @Service
-public class IngredientItemService {
+public class RecipeService {
     public static final Sort NAME_ASC = Sort.by(Sort.Order.asc("name"));
+    public static final Sort ID_ASC = Sort.by(Sort.Order.asc("id"));
 
     @Autowired
-    private IngredientItemRepository repository;
+    private RecipeRepository repository;
 
-    public IngredientItemEntity get(Long id) {
+    public RecipeEntity get(Long id) {
         return repository.getById(id);
     }
 
-    public IngredientItemEntity get(Source source, String extId) {
+    public RecipeEntity get(Source source, String extId) {
         return repository.getBySourceAndExtId(source, extId);
     }
 
-    public void save(IngredientItemEntity entity) {
+    public void save(RecipeEntity entity) {
         repository.save(entity);
     }
 
-    public void save(String name, IngredientUnit unit, String image, Source source, String extId) {
-        IngredientItemEntity entity = new IngredientItemEntity();
-        entity.setName(name);
-        entity.setUnit(unit);
-        entity.setImage(image);
-        entity.setSource(source);
-        entity.setExtId(extId);
-        repository.save(entity);
-    }
-
-    public List<IngredientItemEntity> findAll() {
+    public List<RecipeEntity> findAll() {
         return repository.findAll(NAME_ASC);
     }
 
-    public List<IngredientItemEntity> findAll(Integer page, Integer size) {
+    public List<RecipeEntity> findAll(Integer page, Integer size) {
         if(page < 1) {
             page = 1;
         }
@@ -62,7 +53,12 @@ public class IngredientItemService {
         repository.deleteById(id);
     }
 
+    public void delete(RecipeEntity entity) {
+        repository.delete(entity);
+    }
+
     public Long countAll() {
         return repository.count();
     }
+
 }

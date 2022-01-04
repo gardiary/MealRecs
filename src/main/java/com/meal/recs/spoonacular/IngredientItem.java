@@ -26,29 +26,29 @@ public class IngredientItem {
     }
 
     {
-    "id": 10011549,
-    "original": "spaghetti sauce",
-    "originalName": "spaghetti sauce",
-    "name": "spaghetti sauce",
-    "possibleUnits": [
-        "can",
-        "g",
-        "tin",
-        "jar",
-        "bottle",
-        "oz",
-        "cup",
-        "serving",
-        "tablespoon"
-    ],
-    "consistency": "solid",
-    "aisle": "Pasta and Rice",
-    "image": "tomato-sauce-or-pasta-sauce.jpg",
-    "meta": [],
-    "categoryPath": [
-        "sauce"
-    ]
-}
+        "id": 10011549,
+        "original": "spaghetti sauce",
+        "originalName": "spaghetti sauce",
+        "name": "spaghetti sauce",
+        "possibleUnits": [
+            "can",
+            "g",
+            "tin",
+            "jar",
+            "bottle",
+            "oz",
+            "cup",
+            "serving",
+            "tablespoon"
+        ],
+        "consistency": "solid",
+        "aisle": "Pasta and Rice",
+        "image": "tomato-sauce-or-pasta-sauce.jpg",
+        "meta": [],
+        "categoryPath": [
+            "sauce"
+        ]
+    }
 
     */
     private Long id;

@@ -51,7 +51,7 @@ public class HomeController {
             Map<Long, Ingredient> totalIngredients = recipeList.getTotalIngredients();
 
             if(totalIngredients.size() > 0) {
-                Map<Long, Ingredient> ingredients = recipe.getIngredients();
+                Map<Long, Ingredient> ingredients = recipe.getIngredientsMap();
 
                 for (Map.Entry<Long, Ingredient> entry : ingredients.entrySet()) {
                     Ingredient ingredient = entry.getValue();
@@ -199,7 +199,7 @@ public class HomeController {
             System.out.println();*/
 
             for (Recipe recipe : recommendationRecipes) {
-                Map<Long, Ingredient> ingredients = recipe.getIngredients();
+                Map<Long, Ingredient> ingredients = recipe.getIngredientsMap();
 
                 List<Ingredient> neededIngredients = new ArrayList<>();
 
@@ -265,8 +265,8 @@ public class HomeController {
     }
 
     private void manageIngredients(Recipe recipe, List<Long> selectedIngredients, RecipeList recipeList) {
-        for(Long key : recipe.getIngredients().keySet()) {
-            Ingredient ingredient = recipe.getIngredients().get(key);
+        for(Long key : recipe.getIngredientsMap().keySet()) {
+            Ingredient ingredient = recipe.getIngredientsMap().get(key);
             boolean selected = false;
 
             for(Long selectedIngredient : selectedIngredients) {

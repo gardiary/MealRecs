@@ -40,7 +40,7 @@ public class RecipeList {
       for (Map.Entry<Long, Recipe> entry : recipeMap.entrySet()) {
         Recipe recipe = entry.getValue();
 
-        for (Map.Entry<Long, Ingredient> ingredientEntry : recipe.getIngredients().entrySet()) {
+        for (Map.Entry<Long, Ingredient> ingredientEntry : recipe.getIngredientsMap().entrySet()) {
           Ingredient ingredient = ingredientEntry.getValue();
 
           if (ingredient.isSelected()) {

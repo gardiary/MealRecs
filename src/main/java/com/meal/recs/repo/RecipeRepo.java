@@ -40,7 +40,7 @@ public class RecipeRepo {
     ingredientItemMap.put(12L, new IngredientItem(12L, "Chicken Broth", "cups"));*/
     ingredientItemMap.put(1L, new IngredientItem(1L, "Pasta", BOX));
     ingredientItemMap.put(2L, new IngredientItem(2L, "Mozzarella", CUP));
-    ingredientItemMap.put(3L, new IngredientItem(3L, "Ground Beef", LBS));
+    ingredientItemMap.put(3L, new IngredientItem(3L, "Ground Beef", LB));
     ingredientItemMap.put(4L, new IngredientItem(4L, "Red Sauce", OZ));
     ingredientItemMap.put(5L, new IngredientItem(5L, "Olive Oil", TABLESPOON));
     ingredientItemMap.put(6L, new IngredientItem(6L, "Bread Crumbs", CUP));

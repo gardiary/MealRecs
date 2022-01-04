@@ -1,5 +1,9 @@
 package com.meal.recs.model;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,39 +12,43 @@ import java.util.Map;
 /**
  * Created by gardiary on 25/01/19.
  */
+@Data
+@ToString
+@NoArgsConstructor
 public class Recipe {
   private Long id;
+  private String extId;
   private String name;
-  private String picture;
+  private String image;
   private String recommendationMessage;
   private String description;
   private Time prepTime;
   private Time cookTime;
   private Integer servings;
-  private Map<Long, Ingredient> ingredients = new HashMap<>();
+  private Map<Long, Ingredient> ingredientsMap = new HashMap<>();
+  private List<Ingredient> ingredients = new ArrayList<>();
   private List<String> directions;
   private List<Ingredient> neededIngredients = new ArrayList<>();
+  private Source source;
+  private String sourceUrl;
 
-  public Recipe() {
-  }
-
-  public Recipe(Long id, String name, String picture) {
+  public Recipe(Long id, String name, String image) {
     this.id = id;
     this.name = name;
-    this.picture = picture;
+    this.image = image;
   }
 
-  public Recipe(Long id, String name, String picture, String description, Time prepTime, Time cookTime, Integer servings) {
+  public Recipe(Long id, String name, String image, String description, Time prepTime, Time cookTime, Integer servings) {
     this.id = id;
     this.name = name;
-    this.picture = picture;
+    this.image = image;
     this.description = description;
     this.prepTime = prepTime;
     this.cookTime = cookTime;
     this.servings = servings;
   }
 
-  public Long getId() {
+  /*public Long getId() {
     return id;
   }
 
@@ -126,14 +134,14 @@ public class Recipe {
 
   public void setNeededIngredients(List<Ingredient> neededIngredients) {
     this.neededIngredients = neededIngredients;
-  }
+  }*/
 
   public void addIngredient(Ingredient ingredient) {
-    if(ingredients == null) {
-      ingredients = new HashMap<>();
+    if(ingredientsMap == null) {
+      ingredientsMap = new HashMap<>();
     }
 
-    ingredients.put(ingredient.getItem().getId(), ingredient);
+    ingredientsMap.put(ingredient.getItem().getId(), ingredient);
   }
 
   public void addDirection(String direction) {
@@ -164,20 +172,20 @@ public class Recipe {
   }
 
   public void resetIngredientsState() {
-    for(Map.Entry<Long, Ingredient> entry : ingredients.entrySet()) {
+    for(Map.Entry<Long, Ingredient> entry : ingredientsMap.entrySet()) {
       Ingredient ingredient = entry.getValue();
       ingredient.setSelected(true);
     }
   }
 
   public void resetIngredientsState(boolean state) {
-    for(Map.Entry<Long, Ingredient> entry : ingredients.entrySet()) {
+    for(Map.Entry<Long, Ingredient> entry : ingredientsMap.entrySet()) {
       Ingredient ingredient = entry.getValue();
       ingredient.setSelected(state);
     }
   }
 
-  @Override
+  /*@Override
   public String toString() {
     return "Recipe[" +
             "id=" + id +
@@ -186,5 +194,5 @@ public class Recipe {
             ", ingredients=" + ingredients +
             ", directions=" + directions +
             ']';
-  }
+  }*/
 }

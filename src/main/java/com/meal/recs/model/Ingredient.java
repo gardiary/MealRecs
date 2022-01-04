@@ -1,13 +1,22 @@
 package com.meal.recs.model;
 
+import com.meal.recs.data.entity.IngredientEntity;
+import lombok.Data;
+import lombok.ToString;
+
 import java.math.BigDecimal;
 
 /**
  * Created by gardiary on 25/01/19.
  */
+@Data
+@ToString
 public class Ingredient {
+  private Long id;
+  private Long recipeId;
   private IngredientItem item;
   private Double amount;
+  private IngredientUnit unit;
   private int packageCount;
   private String packageCountText;
   private String packageCountText2;
@@ -21,7 +30,15 @@ public class Ingredient {
     this.amount = amount;
   }
 
-  public IngredientItem getItem() {
+  public Ingredient(IngredientEntity entity) {
+    this.id = entity.getId();
+    this.recipeId = entity.getRecipeId();
+    this.item = new IngredientItem(entity.getItem());
+    this.amount = entity.getAmount();
+    this.unit = entity.getUnit();
+  }
+
+  /*public IngredientItem getItem() {
     return item;
   }
 
@@ -35,7 +52,7 @@ public class Ingredient {
 
   public void setAmount(Double amount) {
     this.amount = amount;
-  }
+  }*/
 
   public String getAmountAsString () {
     BigDecimal am = BigDecimal.valueOf(amount);
@@ -43,7 +60,7 @@ public class Ingredient {
     return am.stripTrailingZeros().toPlainString();
   }
 
-  public int getPackageCount() {
+  /*public int getPackageCount() {
     return packageCount;
   }
 
@@ -83,5 +100,5 @@ public class Ingredient {
             ", packageCount=" + packageCount +
             ", selected=" + selected +
             ']';
-  }
+  }*/
 }
