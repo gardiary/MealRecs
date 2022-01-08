@@ -1,8 +1,12 @@
 package com.meal.recs.model;
 
+import com.meal.recs.data.entity.IngredientEntity;
+import com.meal.recs.data.entity.RecipeEntity;
+import com.meal.recs.utility.Utilities;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.apache.commons.lang3.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,6 +35,7 @@ public class Recipe {
   private List<Ingredient> neededIngredients = new ArrayList<>();
   private Source source;
   private String sourceUrl;
+  private String keyword;
 
   public Recipe(Long id, String name, String image) {
     this.id = id;
@@ -48,6 +53,29 @@ public class Recipe {
     this.servings = servings;
   }
 
+  public Recipe(RecipeEntity entity) {
+    this.id = entity.getId();
+    this.name = entity.getName();
+    this.image = entity.getImage();
+    this.description = entity.getDescription();
+    this.prepTime = new Time(entity.getPrepTime(), entity.getPrepTimeUnit());
+    this.cookTime = new Time(entity.getCookTime(), entity.getCookTimeUnit());
+    this.servings = entity.getServings();
+    this.keyword = entity.getKeyword();
+    this.source = entity.getSource();
+    this.sourceUrl = entity.getSourceUrl();
+    this.extId = entity.getExtId();
+
+    if(ObjectUtils.isNotEmpty(entity.getDirections())) {
+      this.directions = Utilities.jsonStringToObj(entity.getDirections(), List.class);
+    }
+
+    for(IngredientEntity ingredientEntity : entity.getIngredients()) {
+      Ingredient ingredient = new Ingredient(ingredientEntity);
+      this.ingredients.add(ingredient);
+      addIngredient(ingredient);
+    }
+  }
   /*public Long getId() {
     return id;
   }

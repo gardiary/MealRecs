@@ -73,4 +73,7 @@ public class RecipeEntity extends BaseEntity {
 
     @Column(name = "directions", columnDefinition = "text")
     private String directions;
+
+    @Column(name = "keyword", length = 100)
+    private String keyword;
 }

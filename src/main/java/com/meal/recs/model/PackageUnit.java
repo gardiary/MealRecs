@@ -5,5 +5,15 @@ package com.meal.recs.model;
  * Date: 27/12/21, 12.46
  */
 public enum PackageUnit {
-    Box, Bag, Lb, Jar, Bottle, Can, Head, Carton
+    BOX("Box"), BAG("Bag"), LB("Lb"), JAR("Jar"), BOTTLE("Bottle"), CAN("Can"), HEAD("Head"), CARTON("Carton");
+
+    String title;
+
+    PackageUnit(String title) {
+        this.title = title;
+    }
+
+    public String getTitle() {
+        return title;
+    }
 }

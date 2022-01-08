@@ -20,6 +20,7 @@ public class IngredientItem {
     private String image;
     private Source source;
     private String extId;
+    private boolean packageExists;
 
     public IngredientItem(Long id, String name, IngredientUnit unit) {
         this.id = id;

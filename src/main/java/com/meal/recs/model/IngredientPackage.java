@@ -1,25 +1,44 @@
 package com.meal.recs.model;
 
+import com.meal.recs.data.entity.IngredientPackageEntity;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+import java.math.BigDecimal;
+
 /**
  * Created by gardiary on 21/02/19.
  */
+@Data
+@ToString
+@NoArgsConstructor
 public class IngredientPackage {
   private Long id;
-  private String unit;
+  private PackageUnit unit;
   private IngredientItem item;
-  private Double itemPackage;
+  private Double itemAmount;
 
-  public IngredientPackage() {
-  }
-
-  public IngredientPackage(Long id, String unit, IngredientItem item, Double itemPackage) {
+  public IngredientPackage(Long id, PackageUnit unit, IngredientItem item, Double itemAmount) {
     this.id = id;
     this.unit = unit;
     this.item = item;
-    this.itemPackage = itemPackage;
+    this.itemAmount = itemAmount;
   }
 
-  public Long getId() {
+  public IngredientPackage(IngredientPackageEntity entity) {
+    this.id = entity.getId();
+    this.unit = entity.getUnit();
+    this.item = new IngredientItem(entity.getItem());
+    this.itemAmount = entity.getItemAmount();
+  }
+
+  public String getItemAmountAsString() {
+    BigDecimal am = BigDecimal.valueOf(itemAmount);
+    return am.stripTrailingZeros().toPlainString();
+  }
+
+  /*public Long getId() {
     return id;
   }
 
@@ -43,12 +62,12 @@ public class IngredientPackage {
     this.item = item;
   }
 
-  public Double getItemPackage() {
-    return itemPackage;
+  public Double getItemAmount() {
+    return itemAmount;
   }
 
-  public void setItemPackage(Double itemPackage) {
-    this.itemPackage = itemPackage;
+  public void setItemAmount(Double itemAmount) {
+    this.itemAmount = itemAmount;
   }
 
   @Override
@@ -57,7 +76,7 @@ public class IngredientPackage {
             "id=" + id +
             ", unit='" + unit + '\'' +
             ", item=" + item +
-            ", itemPackage=" + itemPackage +
+            ", itemAmount=" + itemAmount +
             ']';
-  }
+  }*/
 }

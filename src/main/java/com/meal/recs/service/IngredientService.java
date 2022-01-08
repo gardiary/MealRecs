@@ -13,8 +13,7 @@ import java.util.List;
  * Date: 03/01/22, 10.28
  */
 @Service
-public class IngredientService {
-    public static final Sort ID_ASC = Sort.by(Sort.Order.asc("id"));
+public class IngredientService extends BaseService {
 
     @Autowired
     private IngredientRepository repository;
@@ -30,16 +29,6 @@ public class IngredientService {
     public void saveAll(List<IngredientEntity> entities) {
         repository.saveAll(entities);
     }
-
-    /*public void save(String name, IngredientUnit unit, String image, Source source, String extId) {
-        IngredientItemEntity entity = new IngredientItemEntity();
-        entity.setName(name);
-        entity.setUnit(unit);
-        entity.setImage(image);
-        entity.setSource(source);
-        entity.setExtId(extId);
-        repository.save(entity);
-    }*/
 
     public List<IngredientEntity> findAll() {
         return repository.findAll(ID_ASC);

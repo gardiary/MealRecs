@@ -18,6 +18,11 @@ import javax.persistence.*;
 @Entity
 @Table(name="mr_ingredient_item")
 public class IngredientItemEntity extends BaseEntity {
+
+    public IngredientItemEntity(Long id) {
+        super.setId(id);
+    }
+
     @Column(name = "name", length = 160, nullable = false)
     private String name;
 

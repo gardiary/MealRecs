@@ -13,6 +13,7 @@ public class Constants {
     public static final String ID = "id";
     public static final String INGREDIENT = "ingredient";
     public static final String INGREDIENTS = "ingredients";
+    public static final String PACKAGES = "packages";
     public static final String QUERY = "query";
     public static final String RECIPE = "recipe";
     public static final String RECIPES = "recipes";

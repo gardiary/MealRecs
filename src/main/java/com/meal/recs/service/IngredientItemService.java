@@ -17,9 +17,7 @@ import java.util.List;
  * Date: 27/12/21, 15.46
  */
 @Service
-public class IngredientItemService {
-    public static final Sort NAME_ASC = Sort.by(Sort.Order.asc("name"));
-
+public class IngredientItemService extends BaseService {
     @Autowired
     private IngredientItemRepository repository;
 

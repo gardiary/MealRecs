@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en" th:fragment="head">
+    <title>MealRecs :: Ingredient Package</title>
+    <!--/*/ <th:block th:include="fragments/general :: head"></th:block> /*/-->
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" th:fragment="homenav">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="/"><strong class="text-light">MealRecs</strong></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapsed" aria-controls="navbarCollapsed" aria-expanded="false">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+    <div class="collapse navbar-collapse justify-content-md-center" id="navbarCollapsed">
+        &nbsp;<span class="navbar-text text-light">
+            <strong>Ingredient Package</strong>
+        </span>
+    </div>
+    <div class="form-inline" th:fragment="myrecipelistnav">
+        <ul class="navbar-nav">
+            <li class="nav-item"><a th:href="@{/recipe/list}" class="text-light" style="font-size:12pt">My Recipe List</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main role="main" class="container">
+    <div>
+        <div class="row mb-2">
+            <div class="col-md-6 col-lg-6">
+                <h4 class="info-header">Ingredient Package</h4>
+            </div>
+        </div>
+
+        <div class="row" th:if="${message != null}">
+            <div class="col-md-6 col-lg-6">
+                <div class="alert alert-danger" role="alert" th:text="${message}"></div>
+            </div>
+        </div>
+
+        <form th:object="${ingredientPackage}" method="post">
+            <div class="row">
+                <div class="col-md-6 col-lg-6">
+                    <input type="hidden" th:field="*{id}">
+                    <div class="form-group">
+                        <label for="unit">Unit</label>
+                        <select class="form-control" th:field="*{unit}">
+                            <option value="" th:text="${'- Select -'}"></option>
+                            <option th:each="unt : ${units}" th:value="${unt}" th:text="${unt}"
+                                    th:selected="${unt == unit}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="item.id">Ingredient</label>
+                        <select class="form-control" th:field="*{item.id}">
+                            <option th:each="ing : ${ingredients}" th:value="${ing.id}" th:text="${ing.name + ' (' + ing.unit + ')'}"
+                                    th:selected="${ing.id == ingredientPackage.item.id}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="itemAmount">Amount</label>
+                        <input type="text" class="form-control" th:field="*{itemAmount}" placeholder="">
+                    </div>
+                    <div>
+                        <a class="btn btn-success" role="button" th:href="@{/admin/ingredient_packages}"><i class="fa fa-arrow-left" aria-hidden="true"></i> Ingredient Packages</a>
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+                        <a class="btn btn-danger pull-right" role="button" th:href="@{/admin/ingredient_package/delete(id=${ingredientPackage.id})}" th:if="${ingredientPackage.id != null}"><i class="fa fa-trash" aria-hidden="true"></i> Delete</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+
+<th:block th:include="fragments/general :: jsscript"></th:block>
+
+</body>
+</html>

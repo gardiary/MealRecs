@@ -19,6 +19,7 @@ public class RecipeRepo {
   private static Map<Long, List<Long>> recommendationRecipes;
   private static Map<Long, IngredientItem> ingredientItemMap;
   private static Map<Long, IngredientPackage> ingredientPackageMap;
+  private static Map<Long, IngredientPackage> ingredientPackagesMap;
 
   static {
     recipes = new ArrayList<>();
@@ -52,18 +53,18 @@ public class RecipeRepo {
     ingredientItemMap.put(12L, new IngredientItem(12L, "Chicken Broth", CUP));
 
     ingredientPackageMap = new HashMap<>();
-    ingredientPackageMap.put(1L, new IngredientPackage(1L, "Box", ingredientItemMap.get(1L), 1D));
-    ingredientPackageMap.put(2L, new IngredientPackage(2L, "Bag", ingredientItemMap.get(2L), 1D));
-    ingredientPackageMap.put(3L, new IngredientPackage(3L, "Lb", ingredientItemMap.get(3L), 1D));
-    ingredientPackageMap.put(4L, new IngredientPackage(4L, "Jar", ingredientItemMap.get(4L), 14D));
-    ingredientPackageMap.put(5L, new IngredientPackage(5L, "Bottle", ingredientItemMap.get(5L), 34D));
-    ingredientPackageMap.put(6L, new IngredientPackage(6L, "Can", ingredientItemMap.get(6L), 1.5));
-    ingredientPackageMap.put(7L, new IngredientPackage(7L, "", ingredientItemMap.get(7L), 1D));
-    ingredientPackageMap.put(8L, new IngredientPackage(8L, "Head", ingredientItemMap.get(8L), 6D));
-    ingredientPackageMap.put(9L, new IngredientPackage(9L, "Carton", ingredientItemMap.get(9L), 12D));
-    ingredientPackageMap.put(10L, new IngredientPackage(10L, "Bag", ingredientItemMap.get(10L), 8D));
-    ingredientPackageMap.put(11L, new IngredientPackage(11L, "Lb", ingredientItemMap.get(11L), 6D));
-    ingredientPackageMap.put(12L, new IngredientPackage(12L, "Carton", ingredientItemMap.get(12L), 4D));
+    ingredientPackageMap.put(1L, new IngredientPackage(1L, PackageUnit.BOX, ingredientItemMap.get(1L), 1D));
+    ingredientPackageMap.put(2L, new IngredientPackage(2L, PackageUnit.BAG, ingredientItemMap.get(2L), 1D));
+    ingredientPackageMap.put(3L, new IngredientPackage(3L, PackageUnit.LB, ingredientItemMap.get(3L), 1D));
+    ingredientPackageMap.put(4L, new IngredientPackage(4L, PackageUnit.JAR, ingredientItemMap.get(4L), 14D));
+    ingredientPackageMap.put(5L, new IngredientPackage(5L, PackageUnit.BOTTLE, ingredientItemMap.get(5L), 34D));
+    ingredientPackageMap.put(6L, new IngredientPackage(6L, PackageUnit.CAN, ingredientItemMap.get(6L), 1.5));
+    ingredientPackageMap.put(7L, new IngredientPackage(7L, null, ingredientItemMap.get(7L), 1D));
+    ingredientPackageMap.put(8L, new IngredientPackage(8L, PackageUnit.HEAD, ingredientItemMap.get(8L), 6D));
+    ingredientPackageMap.put(9L, new IngredientPackage(9L, PackageUnit.CARTON, ingredientItemMap.get(9L), 12D));
+    ingredientPackageMap.put(10L, new IngredientPackage(10L, PackageUnit.BAG, ingredientItemMap.get(10L), 8D));
+    ingredientPackageMap.put(11L, new IngredientPackage(11L, PackageUnit.LB, ingredientItemMap.get(11L), 6D));
+    ingredientPackageMap.put(12L, new IngredientPackage(12L, PackageUnit.CARTON, ingredientItemMap.get(12L), 4D));
 
     Recipe recipe = new Recipe(1L, "Baked Ziti", "recipe-1.png");
     recipe.setDescription("Baked Ziti - classic Italian American comfort food of pasta baked with ground beef, tomato sauce and all kinds of gooey, yummy cheeses. So EASY and so good!");
@@ -217,8 +218,24 @@ public class RecipeRepo {
     return ingredientItemMap.get(id);
   }
 
-  public static IngredientPackage getIngredientPackage(Long id) {
+  public static IngredientPackage getStaticIngredientPackage(Long id) {
     return ingredientPackageMap.get(id);
   }
 
+  public static IngredientPackage getIngredientPackage(Long id) {
+    return ingredientPackagesMap.get(id);
+  }
+
+  public static void addIngredientPackage(IngredientPackage ingredientPackage) {
+    if(ingredientPackagesMap == null) {
+      ingredientPackagesMap = new HashMap<>();
+    }
+    ingredientPackagesMap.put(ingredientPackage.getItem().getId(), ingredientPackage);
+  }
+
+  public static void removeIngredientPackage(IngredientPackage ingredientPackage) {
+    if(ingredientPackagesMap != null) {
+      ingredientPackagesMap.remove(ingredientPackage.getItem().getId());
+    }
+  }
 }

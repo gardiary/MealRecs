@@ -407,7 +407,7 @@ public class Recipe {
     private Integer servings;
     @JsonProperty("spoonacularSourceUrl")
     private String sourceUrl;
-
+    private String keyword;
     /*public List<RecipeInstructionStep> getDirections() {
         if(instructions == null || instructions.isEmpty()) {
             return null;

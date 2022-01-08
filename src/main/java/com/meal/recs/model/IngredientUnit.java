@@ -66,7 +66,8 @@ public enum IngredientUnit {
             return CLOVE;
         } else if(name.equalsIgnoreCase("leaves")) {
             return LEAVE;
-        } else if(name.equalsIgnoreCase("tablespoons") || name.equalsIgnoreCase("tbsps") || name.equalsIgnoreCase("tbsp")) {
+        } else if(name.equalsIgnoreCase("tablespoons") || name.equalsIgnoreCase("tbsps") ||
+                name.equalsIgnoreCase("tbsp") || name.equalsIgnoreCase("tbs")) {
             return TABLESPOON;
         } else if(name.equalsIgnoreCase("teaspoons") || name.equalsIgnoreCase("tsps") || name.equalsIgnoreCase("tsp")) {
             return TEASPOON;

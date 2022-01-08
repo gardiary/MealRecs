@@ -17,10 +17,7 @@ import java.util.List;
  * Date: 03/01/22, 10.27
  */
 @Service
-public class RecipeService {
-    public static final Sort NAME_ASC = Sort.by(Sort.Order.asc("name"));
-    public static final Sort ID_ASC = Sort.by(Sort.Order.asc("id"));
-
+public class RecipeService extends BaseService {
     @Autowired
     private RecipeRepository repository;
 
@@ -47,6 +44,24 @@ public class RecipeService {
 
         Pageable pageable = PageRequest.of(page - 1, size, NAME_ASC);
         return repository.findAll(pageable).getContent();
+    }
+
+    public List<RecipeEntity> findAll(Integer page, Integer size, Sort sort) {
+        if(page < 1) {
+            page = 1;
+        }
+
+        Pageable pageable = PageRequest.of(page - 1, size, sort);
+        return repository.findAll(pageable).getContent();
+    }
+
+    public List<RecipeEntity> findAll(Integer page, Integer size, List<Long> excludeIds) {
+        if(page < 1) {
+            page = 1;
+        }
+
+        Pageable pageable = PageRequest.of(page - 1, size);
+        return repository.findAllByIdNotIn(excludeIds, pageable);
     }
 
     public void delete(Long id) {

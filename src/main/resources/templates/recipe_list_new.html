@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en" th:fragment="head">
+    <title>MealRecs :: Recipe List</title>
+    <!--/*/ <th:block th:include="fragments/general :: head"></th:block> /*/-->
+    <script async="true" src="https://cdn.whisk.com/sdk/shopping-list.js" type="text/javascript" th:if="not ${recipeList.recipeMap.isEmpty()}"></script>
+    <script th:if="not ${recipeList.recipeMap.isEmpty()}">
+      var whisk = whisk || {};
+      whisk.queue = whisk.queue || [];
+    </script>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" th:fragment="homenav">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="/"><strong class="text-light">MealRecs</strong></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapsed" aria-controls="navbarCollapsed" aria-expanded="false">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+    <div class="collapse navbar-collapse justify-content-md-center">
+        <span class="navbar-text text-light">
+          <strong>Step 3: Choose Recipes that will use Remaining Ingredients</strong>
+        </span>
+    </div>
+    <th:block th:include="home :: myrecipelistnav"></th:block>
+</nav>
+
+<main role="main" class="container">
+    <div class="recipe-view-container rounded">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-12"><h4>Recipes Included</h4></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12" style="padding-left: 24px;">
+                        <div class="row recipe-list-box" th:each="recipeKeyValue : ${recipeList.recipeMap}">
+                            <div class="col-md-4" style="padding-left:4px;padding-right:4px;">
+                                <a th:href="@{/new/recipe/{id}(id=${recipeKeyValue.value.id})}">
+                                    <div class="border recipe-list-img-box">
+                                        <img th:src="${recipeKeyValue.value.image}" />
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-7" style="padding-left:4px;padding-right:4px;margin:auto;">
+                                <a th:href="@{/new/recipe/{id}(id=${recipeKeyValue.value.id})}" th:text="${recipeKeyValue.value.name}" style="font-size: 15pt"></a>
+                            </div>
+                            <div class="col-md-1" style="padding-left:4px;padding-right:6px;margin:auto;">
+                                <a th:href="@{/new/recipe/list/remove?id={id}(id=${recipeKeyValue.value.id})}" class="close btn-close-hidden"><span aria-hidden="true">&times;</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" style="padding-left: 40px;">
+                <div class="row">
+                    <div class="col-md-12"><h4>Total Ingredients Needed</h4></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row" th:each="totalKeyValue : ${recipeList.totalIngredientsNew}" style="font-size: 13pt" th:if="${!#strings.isEmpty(totalKeyValue.value.packageCountText)}">
+                            <div class="col-md-12">
+                                <span th:text="${totalKeyValue.value.packageCountText}" th:class="${totalKeyValue.value.item.packageExists ? '' : 'text-danger'}" th:title="${totalKeyValue.value.item.packageExists ? '' : 'Ingredient package not found'}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" style="padding-left: 40px;">
+                <button type="button" id="whisk-shop-products" class="btn text-light btn-mr-1">Buy Ingredients</button>
+                <script th:if="not ${recipeList.recipeMap.isEmpty()}" th:inline="javascript">
+                  whisk.queue.push(function() {
+                    whisk.listeners.addClickListener(
+                      'whisk-shop-products',
+                      'shoppingList.addProductsToBasket', {
+                        products: [[${recipeList.totalIngredientsPackageCountNew}]]
+                      }
+                    );
+                  });
+                </script>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 60px;" th:if="not ${recommendationRecipes.isEmpty()}">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h5>Meal Recommendations using your remaining ingredients</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4" th:each="recRecipe : ${recommendationRecipes}">
+                        <div class="row" style="margin-bottom:4px;padding-left:2px;padding-right:2px" th:if="not ${recipeList.totalIngredientsNew.isEmpty()}">
+                            <div class="col-md-12" style="">
+                                <a class="btn a-rec-recipe" style="width:100%;" th:href="@{/new/recipe/{id}/add(id=${recRecipe.id},crossCheck=1)}" th:text="${recRecipe.recommendationMessage}"
+                                   data-toggle="popover" data-html="true" th:attr="data-content=${recRecipe.neededIngredientsAsHtml}" data-placement="top"></a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a th:href="@{/new/recipe/{id}(id=${recRecipe.id},crossCheck=1)}">
+                                    <div class="recipe-rec-box border">
+                                        <div class="recipe-rec-img-box"><img th:src="${recRecipe.image}" /></div>
+                                        <div class="recipe-rec-text"><a th:href="@{/new/recipe/{id}(id=${recRecipe.id},crossCheck=1)}" th:text="${recRecipe.name}"></a></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<th:block th:include="fragments/general :: jsscript"></th:block>
+
+<script type="text/javascript">
+    $(function () {
+        $('[data-toggle="popover"]').popover({ trigger: "hover" });
+    })
+</script>
+
+</body>
+</html>

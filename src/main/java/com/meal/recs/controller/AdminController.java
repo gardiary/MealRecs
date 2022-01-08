@@ -2,13 +2,12 @@ package com.meal.recs.controller;
 
 import com.meal.recs.data.entity.IngredientEntity;
 import com.meal.recs.data.entity.IngredientItemEntity;
+import com.meal.recs.data.entity.IngredientPackageEntity;
 import com.meal.recs.data.entity.RecipeEntity;
 import com.meal.recs.model.*;
 import com.meal.recs.navigator.PageNavigator;
-import com.meal.recs.service.HttpService;
-import com.meal.recs.service.IngredientItemService;
-import com.meal.recs.service.IngredientService;
-import com.meal.recs.service.RecipeService;
+import com.meal.recs.repo.RecipeRepo;
+import com.meal.recs.service.*;
 import com.meal.recs.spoonacular.RecipeInstructionStep;
 import com.meal.recs.spoonacular.SearchIngredientResponse;
 import com.meal.recs.spoonacular.SearchRecipeResponse;
@@ -63,6 +62,9 @@ public class AdminController {
 
     @Autowired
     private IngredientService ingredientService;
+
+    @Autowired
+    private IngredientPackageService ingredientPackageService;
 
     @Autowired
     private RecipeService recipeService;
@@ -204,7 +206,6 @@ public class AdminController {
         params.put(ID, id);
 
         com.meal.recs.spoonacular.Recipe spoonRecipe = httpService.get(SPOONACULAR_API_GET_RECIPE, com.meal.recs.spoonacular.Recipe.class, params);
-        LOGGER.info("spoonRecipe : {}", spoonRecipe);
         if(ObjectUtils.isNotEmpty(spoonRecipe.getInstructions())) {
             spoonRecipe.setDirections(spoonRecipe.getInstructions().get(0).getSteps());
         }
@@ -248,6 +249,7 @@ public class AdminController {
             entity.setSource(Source.SPOONACULAR);
             entity.setSourceUrl(recipe.getSourceUrl());
             entity.setImage(recipe.getImage());
+            entity.setKeyword(recipe.getKeyword());
             entity.setExtId(String.valueOf(recipe.getId()));
             if(ObjectUtils.isNotEmpty(recipe.getDirections())) {
                 List<String> directionList = recipe.getDirections().stream().map(RecipeInstructionStep::getStep).collect(Collectors.toList());
@@ -308,6 +310,7 @@ public class AdminController {
         recipe.setSource(entity.getSource());
         recipe.setSourceUrl(entity.getSourceUrl());
         recipe.setImage(entity.getImage());
+        recipe.setKeyword(entity.getKeyword());
         recipe.setExtId(entity.getExtId());
 
         if(ObjectUtils.isNotEmpty(entity.getDirections())) {
@@ -334,7 +337,6 @@ public class AdminController {
         }
 
         if(ObjectUtils.isNotEmpty(recipe.getName())) {
-            //RecipeEntity entity = new RecipeEntity();
             entity.setName(recipe.getName());
             entity.setDescription(recipe.getDescription());
             entity.setPrepTime(recipe.getPrepTime().getValue());
@@ -345,6 +347,7 @@ public class AdminController {
             entity.setSource(recipe.getSource());
             entity.setSourceUrl(recipe.getSourceUrl());
             entity.setImage(recipe.getImage());
+            entity.setKeyword(recipe.getKeyword());
             entity.setDirections(Utilities.objToJsonString(recipe.getDirections()));
             //entity.setExtId(String.valueOf(recipe.getId()));
             recipeService.save(entity);
@@ -371,5 +374,122 @@ public class AdminController {
         ingredientService.deleteAll(entity.getIngredients());
         recipeService.delete(entity);
         return "redirect:/admin/recipes";
+    }
+
+    @GetMapping("/ingredient_package/add")
+    public String ingredientPackageAddGet(Model model) {
+        IngredientPackage ingredientPackage = new IngredientPackage();
+        ingredientPackage.setItem(new IngredientItem());
+
+        model.addAttribute("ingredientPackage", ingredientPackage);
+        model.addAttribute(UNITS, PackageUnit.values());
+        model.addAttribute(INGREDIENTS, ingredientItemService.findAll());
+        return "admin/ingredient_package";
+    }
+
+    @PostMapping("/ingredient_package/add")
+    public String ingredientPackageAddPost(@ModelAttribute IngredientPackage ingredientPackage, Model model) {
+        if(ingredientPackage.getUnit() == null || ingredientPackage.getItemAmount() == null
+                || ingredientPackage.getItem() == null || ingredientPackage.getItem().getId() == null) {
+            model.addAttribute("ingredientPackage", ingredientPackage);
+            model.addAttribute(UNITS, PackageUnit.values());
+            model.addAttribute(INGREDIENTS, ingredientItemService.findAll());
+            model.addAttribute("message", "Please complete all fields");
+            return "admin/ingredient_package";
+        }
+
+        IngredientPackageEntity entity = new IngredientPackageEntity(ingredientPackage);
+        IngredientPackageEntity checkEntity = ingredientPackageService.get(entity.getItem());
+        if(checkEntity != null) {
+            model.addAttribute("ingredientPackage", ingredientPackage);
+            model.addAttribute(UNITS, PackageUnit.values());
+            model.addAttribute(INGREDIENTS, ingredientItemService.findAll());
+            model.addAttribute("message", "Ingredient package already exists");
+            return "admin/ingredient_package";
+        }
+
+        ingredientPackageService.save(entity);
+
+        entity.setItem(ingredientItemService.get(ingredientPackage.getItem().getId()));
+        RecipeRepo.addIngredientPackage(new IngredientPackage(entity));
+        return "redirect:/admin/ingredient_packages";
+    }
+
+    @GetMapping("/ingredient_package")
+    public String ingredientPackageGet(Model model, @RequestParam Long id) {
+        IngredientPackageEntity entity = ingredientPackageService.get(id);
+        if(entity == null) {
+            return "redirect:/admin/ingredient_packages";
+        }
+
+        model.addAttribute("ingredientPackage", new IngredientPackage(entity));
+        model.addAttribute(UNITS, PackageUnit.values());
+        model.addAttribute(INGREDIENTS, ingredientItemService.findAll());
+        return "admin/ingredient_package";
+    }
+
+    @PostMapping("/ingredient_package")
+    public String ingredientPackagePost(@ModelAttribute IngredientPackage ingredientPackage, Model model, @RequestParam Long id) {
+        if(ingredientPackage.getUnit() == null || ingredientPackage.getItemAmount() == null
+                || ingredientPackage.getItem() == null || ingredientPackage.getItem().getId() == null) {
+            model.addAttribute("ingredientPackage", ingredientPackage);
+            model.addAttribute(UNITS, PackageUnit.values());
+            model.addAttribute(INGREDIENTS, ingredientItemService.findAll());
+            model.addAttribute("message", "Please complete all fields");
+            return "admin/ingredient_package";
+        }
+
+        IngredientPackageEntity entity = ingredientPackageService.get(id);
+        if(entity == null) {
+            return "redirect:/admin/ingredient_packages";
+        }
+
+        entity.setUnit(ingredientPackage.getUnit());
+        entity.setItem(new IngredientItemEntity(ingredientPackage.getItem().getId()));
+        entity.setItemAmount(ingredientPackage.getItemAmount());
+
+        IngredientPackageEntity checkEntity = ingredientPackageService.get(entity.getItem());
+        if(checkEntity != null && !checkEntity.getId().equals(entity.getId())) {
+            model.addAttribute("ingredientPackage", ingredientPackage);
+            model.addAttribute(UNITS, PackageUnit.values());
+            model.addAttribute(INGREDIENTS, ingredientItemService.findAll());
+            model.addAttribute("message", "Ingredient package already exists");
+            return "admin/ingredient_package";
+        }
+
+        ingredientPackageService.save(entity);
+
+        entity.setItem(ingredientItemService.get(ingredientPackage.getItem().getId()));
+        RecipeRepo.addIngredientPackage(new IngredientPackage(entity));
+        return "redirect:/admin/ingredient_package?id=" + id;
+    }
+
+    @GetMapping("/ingredient_packages")
+    public String ingredientPackages(Model model, @RequestParam(name = "p", required = false) Integer page, HttpServletRequest request) {
+        Long recordCount = ingredientPackageService.countAll();
+        List<IngredientPackageEntity> packages = new ArrayList<>();
+        page = page == null || page <= 0 ? 1 : page;
+
+        if(recordCount > 0) {
+            packages = ingredientPackageService.findAll(page, PAGINATION_PAGE_SIZE);
+
+            String pageNav = pageNavigator.buildPageNav(request.getRequestURI(),
+                    recordCount, page, PAGINATION_PAGE_SIZE, PAGINATION_NAV_TRAIL);
+            model.addAttribute("pageNav", pageNav);
+            model.addAttribute("page", page);
+            model.addAttribute("pageSize", PAGINATION_PAGE_SIZE);
+        }
+
+        model.addAttribute(PACKAGES, packages);
+        return "admin/ingredient_packages";
+    }
+
+    @GetMapping("/ingredient_package/delete")
+    public String ingredientPackageDelete(@RequestParam Long id) {
+        IngredientPackageEntity entity = ingredientPackageService.get(id);
+        RecipeRepo.removeIngredientPackage(new IngredientPackage(entity));
+
+        ingredientPackageService.delete(id);
+        return "redirect:/admin/ingredient_packages";
     }
 }

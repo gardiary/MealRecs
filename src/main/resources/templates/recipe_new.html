@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <title>MealRecs :: Recipe</title>
+    <!--/*/ <th:block th:include="fragments/general :: head"></th:block> /*/-->
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" th:fragment="recsnav">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="/"><strong class="text-light">MealRecs</strong></a>
+    </div>
+    <div class="collapse navbar-collapse justify-content-md-center">
+        <span class="navbar-text text-light">
+          <strong>Step 2: Add Ingredients to My Recipe List</strong>
+        </span>
+    </div>
+    <th:block th:include="home :: myrecipelistnav"></th:block>
+</nav>
+
+<main role="main" class="container">
+    <div th:if="${message != null}" class="alert alert-info alert-dismissible fade show" role="alert">
+        <th:block th:text="${message}" />
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <form id="form" action="" method="post">
+    <div class="recipe-view-container rounded">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-4"><h3 itemprop="name" th:text="${recipe.name}"></h3></div>
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="recipe-img-box border" style="padding: 4px">
+                                    <img itemprop="image" th:src="${recipe.image}" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <span itemprop="prepTime" th:attr="content=${recipe.prepTime.timeAsRecipeSchemaContent}" th:utext="${'Prep: <b>' + recipe.prepTime.value + '</b> ' + recipe.prepTime.timeUnit.label}" class="info-text" th:if="${recipe.prepTime.timeUnit != null}"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <span itemprop="cookTime" th:attr="content=${recipe.cookTime.timeAsRecipeSchemaContent}" th:utext="${'Cook: <b>' + recipe.cookTime.value + '</b> ' + recipe.cookTime.timeUnit.label}" class="info-text"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <span itemprop="recipeYield" th:utext="${'<b>' + recipe.servings + '</b> Servings'}" class="info-text"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 10px">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12"><h4>Ingredients</h4></div>
+                        </div>
+                        <div class="row" th:each="ingredient : ${recipe.ingredientsMap}">
+                            <div class="col-md-4">
+                                <div class="checkbox checkbox-success">
+                                    <input type="checkbox" name="ingredient" class="styled" th:id="'ingredient'+${ingredient.value.item.id}" th:value="${ingredient.value.item.id}" th:checked="${ingredient.value.selected}" />
+                                    <label th:for="'ingredient'+${ingredient.value.item.id}" th:text="${ingredient.value.amountAsString + ' ' + ingredient.value.item.unit}"></label>
+                                </div>
+                            </div>
+                            <div class="col-md-6" style="padding-left: 6px;"><label th:for="'ingredient'+${ingredient.value.item.id}" th:text="${ingredient.value.item.name}"></label></div>
+                            <span itemprop="recipeIngredient" th:text="${ingredient.value.amountAsString + ' ' + ingredient.value.item.unit + ' ' + ingredient.value.item.name}" style="display:none;"></span>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12"><span style="font-size:9pt;">* Checked ingredients will appear on My Recipe List when added</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 16px">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12"><h4>Directions</h4></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <ol>
+                                    <li itemprop="recipeInstructions" th:each="direction : ${recipe.directions}" th:text="${direction}"></li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 10px">
+                    <div class="col-md-10">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>Meal Recommendations</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4" th:each="recRecipe : ${recommendationRecipes}">
+                                <a th:href="@{/new/recipe/{id}(id=${recRecipe.id})}">
+                                    <div class="recipe-rec-box border">
+                                        <div class="recipe-rec-img-box"><img th:src="${recRecipe.image}" /></div>
+                                        <div class="recipe-rec-text"><a th:href="@{/new/recipe/{id}(id=${recRecipe.id})}" th:text="${recRecipe.name}"></a></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="row" style="margin-top: 8px;">
+                    <div class="col-md-12" style="padding-left: 4px; padding-right: 4px;">
+                        <button type="button" id="addRecipeBtn" class="btn text-light btn-mr-1">Add to My Recipe List</button>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 20px;">
+                    <div class="col-md-12" style="padding-left: 4px; padding-right: 4px;">
+                        <span itemprop="description" th:text="${recipe.description}"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+</main>
+
+<th:block th:include="fragments/general :: jsscript"></th:block>
+
+<script>
+    $(function() {
+        $("#addRecipeBtn").click( function() {
+                    $( "#form" ).submit();
+                }
+        );
+    });
+</script>
+</body>
+</html>

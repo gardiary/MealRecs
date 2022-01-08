@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en" th:fragment="head">
+    <title>MealRecs :: Find Recipe</title>
+    <!--/*/ <th:block th:include="fragments/general :: head"></th:block> /*/-->
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" th:fragment="homenav">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="/"><strong class="text-light">MealRecs</strong></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapsed" aria-controls="navbarCollapsed" aria-expanded="false">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+    <div class="collapse navbar-collapse justify-content-md-center" id="navbarCollapsed">
+        <span class="navbar-text text-light">
+          <strong>Step 1: Find a recipe</strong>
+        </span>
+    </div>
+    <div class="form-inline" th:fragment="myrecipelistnav">
+        <ul class="navbar-nav">
+            <li class="nav-item"><a th:href="@{/new/recipe/list}" class="text-light" style="font-size:12pt">My Recipe List</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main role="main" class="container">
+    <div>
+        <div class="row">
+            <div class="col-md-4 recipe-box my-3" th:each="recipe : ${recipes}">
+                <a th:href="@{/new/recipe/{id}(id=${recipe.id})}">
+                    <div class="recipe-prev-box border">
+                        <div class="recipe-prev-img-box"><img th:src="${recipe.image}" /></div>
+                        <div class="recipe-prev-text"><a th:href="@{/new/recipe/{id}(id=${recipe.id})}" th:text="${recipe.name}"></a></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</main>
+
+<th:block th:include="fragments/general :: jsscript"></th:block>
+
+</body>
+</html>
