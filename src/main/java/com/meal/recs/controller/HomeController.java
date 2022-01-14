@@ -324,13 +324,13 @@ public class HomeController {
         page = page == null || page <= 0 ? 1 : page;
 
         if(recordCount > 0) {
-            recipes = recipeService.findAll(page, PAGINATION_PAGE_SIZE, ID_DESC);
+            recipes = recipeService.findAll(page, RECIPES_PAGINATION_PAGE_SIZE, ID_DESC);
 
             String pageNav = pageNavigator.buildPageNav(request.getRequestURI(),
-                    recordCount, page, PAGINATION_PAGE_SIZE, PAGINATION_NAV_TRAIL);
+                    recordCount, page, RECIPES_PAGINATION_PAGE_SIZE, PAGINATION_NAV_TRAIL);
             model.addAttribute("pageNav", pageNav);
             model.addAttribute("page", page);
-            model.addAttribute("pageSize", PAGINATION_PAGE_SIZE);
+            model.addAttribute("pageSize", RECIPES_PAGINATION_PAGE_SIZE);
         }
 
         model.addAttribute(RECIPES, recipes);
@@ -378,7 +378,7 @@ public class HomeController {
             recipe.resetIngredientsState();
         }*/
 
-        List<RecipeEntity> recommendationEntities = recipeService.findAll(1, 3, Collections.singletonList(id));
+        List<RecipeEntity> recommendationEntities = recipeService.findAll(1, 6, Collections.singletonList(id));
         List<Recipe> recommendationRecipes = recommendationEntities.stream().map(Recipe::new).collect(Collectors.toList());
 
         model.addAttribute("recipe", recipe);
@@ -423,13 +423,13 @@ public class HomeController {
         model.addAttribute("recipeList", recipeList);
 
         List<Recipe> recommendationRecipes = new ArrayList<>();
-        Random random = new Random();
+        //Random random = new Random();
         if(recipeList.getRecipeMap().size() > 0) {
             //List<Recipe> recommendationRecipesCandidate = RecipeRepo.getRecipes().stream()
             //        .filter(rec -> recipeList.getRecipeMap().get(rec.getId()) == null)
             //        .collect(Collectors.toList());
             Set<Long> keys = recipeList.getRecipeMap().keySet();
-            List<RecipeEntity> recipeEntities = recipeService.findAll(1, 3, new ArrayList<>(keys));
+            List<RecipeEntity> recipeEntities = recipeService.findAll(1, 6, new ArrayList<>(keys));
             recommendationRecipes = recipeEntities.stream().map(Recipe::new).collect(Collectors.toList());
             /*if(recommendationRecipesCandidate != null && recommendationRecipesCandidate.size() > 0) {
                 if(recommendationRecipesCandidate.size() <= 3) {
@@ -456,7 +456,6 @@ public class HomeController {
 
                 for(Map.Entry<Long, Ingredient> entry : ingredients.entrySet()) {
                     Ingredient ingre = entry.getValue();
-
                     Ingredient checkIngredient = totalIngredients.get(ingre.getItem().getId());
 
                     if(checkIngredient != null) {
@@ -549,4 +548,20 @@ public class HomeController {
 
         return "redirect:/new/recipe/list";
     }
+
+    @RequestMapping(path = "/new/recipe/{id}/add", method = RequestMethod.GET)
+    public String newRecipeAdd(@PathVariable("id") Long id,
+                            @RequestParam(value = "crossCheck", required = false) String crossCheck,
+                            @ModelAttribute("recipeList") RecipeList recipeList) {
+        Recipe recipe = recipeList.getRecipeMap().get(id);
+        if(recipe == null) {
+            RecipeEntity entity = recipeService.get(id);
+            recipe = new Recipe(entity);
+        }
+
+        recipeList.addRecipe(recipe);
+
+        return "redirect:/new/recipe/list";
+    }
+
 }

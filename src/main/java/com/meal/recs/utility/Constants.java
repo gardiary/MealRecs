@@ -7,6 +7,7 @@ package com.meal.recs.utility;
 public class Constants {
     public static final Integer PAGINATION_PAGE_SIZE = 10;
     public static final Integer PAGINATION_NAV_TRAIL = 5;
+    public static final Integer RECIPES_PAGINATION_PAGE_SIZE = 9;
 
     public static final String API_KEY = "apiKey";
     public static final String BASE_IMAGE_URL = "baseImageUrl";
